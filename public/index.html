@@ -6,6 +6,7 @@
     height: 100%;
   }
 </style>
+<link rel="stylesheet" href="css/style.css" />
 
 <script>
   if (location.search && location.search.startsWith('?p=')) {
@@ -29,3 +30,20 @@
     node: document.getElementById('elm'),
   });
 </script>
+
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+<script>
+  var firebaseConfig = {
+    apiKey: 'AIzaSyC0WS9kO6ExEuWBRV1KMzPe-ktPBJthltI',
+    authDomain: 'kanu-url-shortener.firebaseapp.com',
+    databaseURL: 'https://kanu-url-shortener.firebaseio.com',
+    projectId: 'kanu-url-shortener',
+    storageBucket: 'kanu-url-shortener.appspot.com',
+    messagingSenderId: '511679429725',
+    appId: '1:511679429725:web:12e406d0f831d6a0e521b4',
+  };
+  firebase.initializeApp(firebaseConfig);
+  var db = firebase.firestore();
+</script>
+<script src="/js/shortener-port.js"></script>

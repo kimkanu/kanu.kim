@@ -1,11 +1,10 @@
 module Route exposing (Route(..), fromUrl, link, toTitle, toUrl)
 
-import Html exposing (..)
-import Html.Attributes exposing (..)
-import Json.Decode as Decode
+import Html.Styled exposing (Attribute, Html, a)
+import Html.Styled.Attributes exposing (href)
 import Url exposing (Url)
 import Url.Builder as Builder
-import Url.Parser exposing ((</>), Parser)
+import Url.Parser exposing (Parser, s, top)
 
 
 
@@ -14,6 +13,7 @@ import Url.Parser exposing ((</>), Parser)
 
 type Route
     = Root
+    | Shortener
     | NotFound
 
 
@@ -30,7 +30,8 @@ fromUrl =
 parser : Parser (Route -> a) a
 parser =
     Url.Parser.oneOf
-        [ Url.Parser.map Root Url.Parser.top
+        [ Url.Parser.map Root top
+        , Url.Parser.map Shortener <| s "shortener"
         ]
 
 
@@ -48,10 +49,13 @@ toRouteData : Route -> RouteData
 toRouteData route =
     case route of
         Root ->
-            RouteData "/" "Home"
+            RouteData "/" "kanu.kim"
+
+        Shortener ->
+            RouteData "/shortener" "kanu.kim URL Shortener"
 
         NotFound ->
-            RouteData (Builder.absolute [ "404" ] []) "Not found"
+            RouteData "/404" "Not Found"
 
 
 toTitle : Route -> String

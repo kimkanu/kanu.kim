@@ -6,9 +6,9 @@ module Page.Home exposing
     , view
     )
 
-import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.Events exposing (..)
+import Css exposing (alignItems, center, displayFlex, height, justifyContent, maxHeight, maxWidth, pct, px, vw, width)
+import Html.Styled exposing (..)
+import Html.Styled.Attributes exposing (css, src)
 import Http
 
 
@@ -46,16 +46,28 @@ update msg model =
 -- VIEW
 
 
-view : { title : String, page : List (Html Msg) }
-view =
-    { title = "Home"
+view : Model -> { title : String, page : List (Html Msg) }
+view _ =
+    { title = "kanu.kim"
     , page =
-        [ header [] [ h1 [] [ text "Homepage" ] ]
-        , main_ [] viewPage
+        [ main_ [] viewMain
         ]
     }
 
 
-viewPage : List (Html Msg)
-viewPage =
-    [ text "hi" ]
+viewMain : List (Html Msg)
+viewMain =
+    [ div
+        [ css [ displayFlex, justifyContent center, alignItems center, height (pct 100) ] ]
+        [ img
+            [ src "https://avatars0.githubusercontent.com/u/22598138?s=460&v=4"
+            , css
+                [ width (vw 50)
+                , maxWidth (px 280)
+                , height (vw 50)
+                , maxHeight (px 280)
+                ]
+            ]
+            []
+        ]
+    ]
