@@ -1,9 +1,18 @@
 <script>
   function goToMain(pathname) {
-    location.replace(location.origin + '/?p=' + encodeURI(pathname));
+    location.replace(
+      location.origin +
+        '/?p=' +
+        encodeURI(pathname) +
+        (location.search ? '&' + location.search.slice(1) : ''),
+    );
   }
   var pathname = location.pathname.slice(1);
-  if (pathname.charAt(0) != '_' || pathname.indexOf('/') >= 0) {
+  if (
+    pathname.charAt(0) != '_' ||
+    pathname.indexOf('/') >= 0 ||
+    pathname.indexOf('?') >= 0
+  ) {
     goToMain(pathname);
   }
 </script>
@@ -22,7 +31,7 @@
   };
   firebase.initializeApp(firebaseConfig);
   var db = firebase.firestore();
-  var urlId = 'abcde'; // pathname.slice(1);
+  var urlId = pathname.slice(1);
   db.collection('urls')
     .doc(urlId)
     .get()
