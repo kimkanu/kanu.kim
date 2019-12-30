@@ -1,3 +1,3 @@
-require('gh-pages').publish('docs', function (err) {
+require('gh-pages').publish('public', function (err) {
   console.error(err);
 });
