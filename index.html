@@ -7,6 +7,20 @@
   }
 </style>
 
+<script>
+  if (location.search && location.search.startsWith('?p=')) {
+    const s = location.search;
+    const pathname = decodeURI(
+      s.indexOf('&') >= 0 ? s.slice(3, s.indexOf('&')) : s.slice(3),
+    );
+    const search = s.indexOf('&') >= 0 ? s.slice(s.indexOf('&') + 1) : '';
+    window.history.replaceState(
+      null,
+      null,
+      `/${pathname}${search ? '?' + search : ''}${location.hash}`,
+    );
+  }
+</script>
 <script src="main.js"></script>
 
 <div id="elm"></div>
