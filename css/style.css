@@ -1,0 +1,81 @@
+@font-face {
+  font-family: 'Mosk';
+  src: url('/fonts/MoskMedium500.woff2') format('woff2'),
+    url('/fonts/MoskMedium500.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mosk';
+  src: url('/fonts/MoskExtra-Light200.woff2') format('woff2'),
+    url('/fonts/MoskExtra-Light200.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mosk';
+  src: url('/fonts/MoskBold700.woff2') format('woff2'),
+    url('/fonts/MoskBold700.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mosk';
+  src: url('/fonts/MoskUltra-Bold900.woff2') format('woff2'),
+    url('/fonts/MoskUltra-Bold900.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mosk';
+  src: url('/fonts/MoskLight300.woff2') format('woff2'),
+    url('/fonts/MoskLight300.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mosk';
+  src: url('/fonts/MoskSemi-Bold600.woff2') format('woff2'),
+    url('/fonts/MoskSemi-Bold600.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mosk';
+  src: url('/fonts/MoskThin100.woff2') format('woff2'),
+    url('/fonts/MoskThin100.woff') format('woff');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mosk';
+  src: url('/fonts/MoskExtra-Bold800.woff2') format('woff2'),
+    url('/fonts/MoskExtra-Bold800.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mosk';
+  src: url('/fonts/MoskNormal400.woff2') format('woff2'),
+    url('/fonts/MoskNormal400.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'BoxIcons';
+  src: url('https://cdn.jsdelivr.net/npm/boxicons@2.0.4/fonts/boxicons.woff2')
+      format('woff2'),
+    url('https://cdn.jsdelivr.net/npm/boxicons@2.0.4/fonts/boxicons.woff')
+      format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
