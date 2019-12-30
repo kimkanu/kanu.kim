@@ -4,7 +4,7 @@
       location.origin +
         '/?p=' +
         encodeURI(pathname) +
-        (location.search ? '&' + location.search.slice(1) : ''),
+        (location.search ? '&' + location.search.slice(1) + location.hash : ''),
     );
   }
   var pathname = location.pathname.slice(1);
