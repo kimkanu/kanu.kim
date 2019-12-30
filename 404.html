@@ -1,1 +1,42 @@
-Custom 404 page!
+<script>
+  function goToMain(pathname) {
+    location.replace(location.origin + '/?p=' + encodeURI(pathname));
+  }
+  function showRedirection() {
+    document.body.innerHTML = 'Redirecting...';
+  }
+
+  var pathname = location.pathname.slice(1);
+  if (pathname.charAt(0) != '_' || pathname.indexOf('/') >= 0) {
+    goToMain(pathname);
+  } else {
+    showRedirection();
+  }
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+<script>
+  var firebaseConfig = {
+    apiKey: 'AIzaSyC0WS9kO6ExEuWBRV1KMzPe-ktPBJthltI',
+    authDomain: 'kanu-url-shortener.firebaseapp.com',
+    databaseURL: 'https://kanu-url-shortener.firebaseio.com',
+    projectId: 'kanu-url-shortener',
+    storageBucket: 'kanu-url-shortener.appspot.com',
+    messagingSenderId: '511679429725',
+    appId: '1:511679429725:web:12e406d0f831d6a0e521b4',
+  };
+  firebase.initializeApp(firebaseConfig);
+  var db = firebase.firestore();
+  var urlId = 'abcde'; // pathname.slice(1);
+  db.collection('urls')
+    .doc(urlId)
+    .get()
+    .then((querySnapshot) => {
+      if (querySnapshot.exists) {
+        location.replace(querySnapshot.data().url);
+      } else {
+        goToMain(pathname);
+      }
+    });
+</script>
