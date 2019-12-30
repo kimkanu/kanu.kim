@@ -22,5 +22,8 @@
   "homepage": "https://github.com/kimkanu/kanu.kim#readme",
   "dependencies": {
     "gh-pages": "^2.1.1"
+  },
+  "scripts": {
+    "serve": "node scripts/publish.js"
   }
 }
