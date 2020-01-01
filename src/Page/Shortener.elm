@@ -7,7 +7,7 @@ port module Page.Shortener exposing
     , view
     )
 
-import Css exposing (alignItems, backgroundColor, block, bold, border, borderRadius, boxShadow5, calc, center, color, column, cursor, display, displayFlex, em, flexDirection, fontFamilies, fontFamily, fontSize, fontWeight, height, hex, hover, int, justifyContent, lineHeight, marginBottom, marginLeft, marginRight, maxHeight, maxWidth, minus, none, outline, padding2, pct, pointer, px, textAlign, vw, width)
+import Css exposing (alignItems, backgroundColor, block, bold, border, borderRadius, boxShadow5, calc, center, color, column, cursor, display, displayFlex, em, flexDirection, fontFamilies, fontFamily, fontSize, fontWeight, height, hex, hover, int, justifyContent, lineHeight, marginBottom, marginLeft, marginRight, maxHeight, maxWidth, minus, none, outline, padding2, pct, pointer, px, textAlign, vw, wait, width)
 import Debug exposing (log)
 import Html.Styled exposing (Attribute, Html, b, button, div, input, main_, span, text)
 import Html.Styled.Attributes exposing (css, src, type_, value)
@@ -46,7 +46,7 @@ init =
 
 type Msg
     = Change String
-    | Shorten
+    | ClickButton
     | ReceiveShortenedUrl (Result D.Error String)
 
 
@@ -54,10 +54,28 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Change newUrl ->
-            ( { model | url = newUrl }, Cmd.none )
+            ( { model
+                | url = newUrl
+                , shortened =
+                    if model.shortened == Shortened then
+                        NotShortened
 
-        Shorten ->
-            ( { model | shortened = Processing }, shorten (E.string model.url) )
+                    else
+                        model.shortened
+              }
+            , Cmd.none
+            )
+
+        ClickButton ->
+            case model.shortened of
+                NotShortened ->
+                    ( { model | shortened = Processing }, shorten (E.string model.url) )
+
+                Processing ->
+                    ( model, Cmd.none )
+
+                Shortened ->
+                    ( model, copyToClipboard (E.string model.url) )
 
         ReceiveShortenedUrl newUrl ->
             ( { model | shortened = Shortened, url = "kanu.kim/_" ++ Result.withDefault model.url newUrl }, Cmd.none )
@@ -152,30 +170,57 @@ viewInput model =
             ]
             []
         , div
-            [ onClick Shorten
+            [ onClick ClickButton
             , css
                 [ width (em 1.29)
                 , height (em 1.29)
                 , lineHeight (em 1.29)
                 , fontSize (em 3.5)
-                , backgroundColor (hex "20BACA")
+                , backgroundColor
+                    (hex <|
+                        if model.shortened == Processing then
+                            "828788"
+
+                        else
+                            "20BACA"
+                    )
                 , borderRadius (pct 50)
                 , color (hex "ffffff")
                 , textAlign center
                 , marginLeft (em 0.3)
                 , fontFamilies [ "BoxIcons" ]
-                , cursor pointer
-                , hover
-                    [ boxShadow5 (px 0) (px 8) (px 18) (px -4) (hex "14b8ca") ]
+                , cursor <|
+                    if model.shortened == Processing then
+                        wait
+
+                    else
+                        pointer
+                , hover <|
+                    if model.shortened == Processing then
+                        []
+
+                    else
+                        [ boxShadow5 (px 0) (px 8) (px 18) (px -4) (hex "14b8ca") ]
                 ]
             ]
-            [ text "\u{EB48}"
+            [ case model.shortened of
+                NotShortened ->
+                    text "\u{EB48}"
+
+                Processing ->
+                    text "\u{EA48}"
+
+                Shortened ->
+                    span [ css [ fontSize (em 0.72) ] ] [ text "\u{EA1E}" ]
             ]
         ]
     ]
 
 
 port shorten : E.Value -> Cmd msg
+
+
+port copyToClipboard : E.Value -> Cmd msg
 
 
 port getShortenedUrl : (D.Value -> msg) -> Sub msg

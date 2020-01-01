@@ -5,6 +5,15 @@ app.ports.shorten.subscribe(function (u) {
     app.ports.getShortenedUrl.send(shortenedUrl);
   });
 });
+app.ports.copyToClipboard.subscribe(function (url) {
+  const t = document.createElement('textarea');
+  document.body.appendChild(t);
+  t.value = url;
+  t.select();
+  document.execCommand('copy');
+  document.body.removeChild(t);
+});
+
 
 function makeid(length) {
   let result = '';

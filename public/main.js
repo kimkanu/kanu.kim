@@ -6142,6 +6142,7 @@ var $author$project$Page$Home$update = F2(
 	});
 var $author$project$Page$Shortener$Processing = {$: 'Processing'};
 var $author$project$Page$Shortener$Shortened = {$: 'Shortened'};
+var $author$project$Page$Shortener$copyToClipboard = _Platform_outgoingPort('copyToClipboard', $elm$core$Basics$identity);
 var $author$project$Page$Shortener$shorten = _Platform_outgoingPort('shorten', $elm$core$Basics$identity);
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$core$Result$withDefault = F2(
@@ -6161,15 +6162,29 @@ var $author$project$Page$Shortener$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{url: newUrl}),
+						{
+							shortened: _Utils_eq(model.shortened, $author$project$Page$Shortener$Shortened) ? $author$project$Page$Shortener$NotShortened : model.shortened,
+							url: newUrl
+						}),
 					$elm$core$Platform$Cmd$none);
-			case 'Shorten':
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{shortened: $author$project$Page$Shortener$Processing}),
-					$author$project$Page$Shortener$shorten(
-						$elm$json$Json$Encode$string(model.url)));
+			case 'ClickButton':
+				var _v1 = model.shortened;
+				switch (_v1.$) {
+					case 'NotShortened':
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{shortened: $author$project$Page$Shortener$Processing}),
+							$author$project$Page$Shortener$shorten(
+								$elm$json$Json$Encode$string(model.url)));
+					case 'Processing':
+						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+					default:
+						return _Utils_Tuple2(
+							model,
+							$author$project$Page$Shortener$copyToClipboard(
+								$elm$json$Json$Encode$string(model.url)));
+				}
 			default:
 				var newUrl = msg.a;
 				return _Utils_Tuple2(
@@ -8814,7 +8829,7 @@ var $rtfeldman$elm_css$Css$fontFamilies = A2(
 var $author$project$Page$Shortener$Change = function (a) {
 	return {$: 'Change', a: a};
 };
-var $author$project$Page$Shortener$Shorten = {$: 'Shorten'};
+var $author$project$Page$Shortener$ClickButton = {$: 'ClickButton'};
 var $rtfeldman$elm_css$Css$backgroundColor = function (c) {
 	return A2($rtfeldman$elm_css$Css$property, 'background-color', c.value);
 };
@@ -9337,6 +9352,7 @@ var $rtfeldman$elm_css$Css$prop2 = F3(
 	});
 var $rtfeldman$elm_css$Css$padding2 = $rtfeldman$elm_css$Css$prop2('padding');
 var $rtfeldman$elm_css$Css$pointer = {cursor: $rtfeldman$elm_css$Css$Structure$Compatible, value: 'pointer'};
+var $rtfeldman$elm_css$Html$Styled$span = $rtfeldman$elm_css$Html$Styled$node('span');
 var $rtfeldman$elm_css$Css$textAlign = function (fn) {
 	return A3(
 		$rtfeldman$elm_css$Css$Internal$getOverloadedProperty,
@@ -9346,6 +9362,7 @@ var $rtfeldman$elm_css$Css$textAlign = function (fn) {
 };
 var $rtfeldman$elm_css$Html$Styled$Attributes$type_ = $rtfeldman$elm_css$Html$Styled$Attributes$stringProperty('type');
 var $rtfeldman$elm_css$Html$Styled$Attributes$value = $rtfeldman$elm_css$Html$Styled$Attributes$stringProperty('value');
+var $rtfeldman$elm_css$Css$wait = {cursor: $rtfeldman$elm_css$Css$Structure$Compatible, value: 'wait'};
 var $author$project$Page$Shortener$viewInput = function (model) {
 	return _List_fromArray(
 		[
@@ -9402,7 +9419,7 @@ var $author$project$Page$Shortener$viewInput = function (model) {
 					$rtfeldman$elm_css$Html$Styled$div,
 					_List_fromArray(
 						[
-							$rtfeldman$elm_css$Html$Styled$Events$onClick($author$project$Page$Shortener$Shorten),
+							$rtfeldman$elm_css$Html$Styled$Events$onClick($author$project$Page$Shortener$ClickButton),
 							$rtfeldman$elm_css$Html$Styled$Attributes$css(
 							_List_fromArray(
 								[
@@ -9415,7 +9432,8 @@ var $author$project$Page$Shortener$viewInput = function (model) {
 									$rtfeldman$elm_css$Css$fontSize(
 									$rtfeldman$elm_css$Css$em(3.5)),
 									$rtfeldman$elm_css$Css$backgroundColor(
-									$rtfeldman$elm_css$Css$hex('20BACA')),
+									$rtfeldman$elm_css$Css$hex(
+										_Utils_eq(model.shortened, $author$project$Page$Shortener$Processing) ? '828788' : '20BACA')),
 									$rtfeldman$elm_css$Css$borderRadius(
 									$rtfeldman$elm_css$Css$pct(50)),
 									$rtfeldman$elm_css$Css$color(
@@ -9426,9 +9444,10 @@ var $author$project$Page$Shortener$viewInput = function (model) {
 									$rtfeldman$elm_css$Css$fontFamilies(
 									_List_fromArray(
 										['BoxIcons'])),
-									$rtfeldman$elm_css$Css$cursor($rtfeldman$elm_css$Css$pointer),
+									$rtfeldman$elm_css$Css$cursor(
+									_Utils_eq(model.shortened, $author$project$Page$Shortener$Processing) ? $rtfeldman$elm_css$Css$wait : $rtfeldman$elm_css$Css$pointer),
 									$rtfeldman$elm_css$Css$hover(
-									_List_fromArray(
+									_Utils_eq(model.shortened, $author$project$Page$Shortener$Processing) ? _List_Nil : _List_fromArray(
 										[
 											A5(
 											$rtfeldman$elm_css$Css$boxShadow5,
@@ -9442,7 +9461,31 @@ var $author$project$Page$Shortener$viewInput = function (model) {
 						]),
 					_List_fromArray(
 						[
-							$rtfeldman$elm_css$Html$Styled$text('\uEB48')
+							function () {
+							var _v0 = model.shortened;
+							switch (_v0.$) {
+								case 'NotShortened':
+									return $rtfeldman$elm_css$Html$Styled$text('\uEB48');
+								case 'Processing':
+									return $rtfeldman$elm_css$Html$Styled$text('\uEA48');
+								default:
+									return A2(
+										$rtfeldman$elm_css$Html$Styled$span,
+										_List_fromArray(
+											[
+												$rtfeldman$elm_css$Html$Styled$Attributes$css(
+												_List_fromArray(
+													[
+														$rtfeldman$elm_css$Css$fontSize(
+														$rtfeldman$elm_css$Css$em(0.72))
+													]))
+											]),
+										_List_fromArray(
+											[
+												$rtfeldman$elm_css$Html$Styled$text('\uEA1E')
+											]));
+							}
+						}()
 						]))
 				]))
 		]);
@@ -9468,7 +9511,6 @@ var $rtfeldman$elm_css$Css$int = function (val) {
 };
 var $rtfeldman$elm_css$Css$marginBottom = $rtfeldman$elm_css$Css$prop1('margin-bottom');
 var $rtfeldman$elm_css$Css$marginRight = $rtfeldman$elm_css$Css$prop1('margin-right');
-var $rtfeldman$elm_css$Html$Styled$span = $rtfeldman$elm_css$Html$Styled$node('span');
 var $author$project$Page$Shortener$viewTitle = _List_fromArray(
 	[
 		A2(
