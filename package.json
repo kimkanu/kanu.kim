@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "node scripts/publish.js"
+    "serve": "node scripts/publish.js",
+    "dev": "elm-live src/Main.elm --open --pushstate --dir=./public -- --output=./public/main.js"
   },
   "repository": {
     "type": "git",

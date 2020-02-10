@@ -5980,9 +5980,9 @@ var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Page$Home$init = _Utils_Tuple2(
 	{},
 	$elm$core$Platform$Cmd$none);
-var $author$project$Page$Shortener$NotShortened = {$: 'NotShortened'};
+var $author$project$Page$Shortener$Empty = {$: 'Empty'};
 var $author$project$Page$Shortener$init = _Utils_Tuple2(
-	{shortened: $author$project$Page$Shortener$NotShortened, url: ''},
+	{shortened: $author$project$Page$Shortener$Empty, url: ''},
 	$elm$core$Platform$Cmd$none);
 var $author$project$Main$PageMsg = function (a) {
 	return {$: 'PageMsg', a: a};
@@ -6140,6 +6140,7 @@ var $author$project$Page$Home$update = F2(
 		var data = msg.a;
 		return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 	});
+var $author$project$Page$Shortener$NotShortened = {$: 'NotShortened'};
 var $author$project$Page$Shortener$Processing = {$: 'Processing'};
 var $author$project$Page$Shortener$Shortened = {$: 'Shortened'};
 var $author$project$Page$Shortener$copyToClipboard = _Platform_outgoingPort('copyToClipboard', $elm$core$Basics$identity);
@@ -6163,7 +6164,7 @@ var $author$project$Page$Shortener$update = F2(
 					_Utils_update(
 						model,
 						{
-							shortened: _Utils_eq(model.shortened, $author$project$Page$Shortener$Shortened) ? $author$project$Page$Shortener$NotShortened : model.shortened,
+							shortened: (newUrl === '') ? $author$project$Page$Shortener$Empty : (_Utils_eq(model.shortened, $author$project$Page$Shortener$Processing) ? $author$project$Page$Shortener$Processing : $author$project$Page$Shortener$NotShortened),
 							url: newUrl
 						}),
 					$elm$core$Platform$Cmd$none);
@@ -6177,13 +6178,13 @@ var $author$project$Page$Shortener$update = F2(
 								{shortened: $author$project$Page$Shortener$Processing}),
 							$author$project$Page$Shortener$shorten(
 								$elm$json$Json$Encode$string(model.url)));
-					case 'Processing':
-						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
-					default:
+					case 'Shortened':
 						return _Utils_Tuple2(
 							model,
 							$author$project$Page$Shortener$copyToClipboard(
 								$elm$json$Json$Encode$string(model.url)));
+					default:
+						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 				}
 			default:
 				var newUrl = msg.a;
@@ -8883,6 +8884,7 @@ var $rtfeldman$elm_css$Css$color = function (c) {
 	return A2($rtfeldman$elm_css$Css$property, 'color', c.value);
 };
 var $rtfeldman$elm_css$Css$cursor = $rtfeldman$elm_css$Css$prop1('cursor');
+var $rtfeldman$elm_css$Css$default = {cursor: $rtfeldman$elm_css$Css$Structure$Compatible, value: 'default'};
 var $rtfeldman$elm_css$Css$EmUnits = {$: 'EmUnits'};
 var $rtfeldman$elm_css$Css$em = A2($rtfeldman$elm_css$Css$Internal$lengthConverter, $rtfeldman$elm_css$Css$EmUnits, 'em');
 var $rtfeldman$elm_css$Css$fontSize = $rtfeldman$elm_css$Css$prop1('font-size');
@@ -9445,9 +9447,9 @@ var $author$project$Page$Shortener$viewInput = function (model) {
 									_List_fromArray(
 										['BoxIcons'])),
 									$rtfeldman$elm_css$Css$cursor(
-									_Utils_eq(model.shortened, $author$project$Page$Shortener$Processing) ? $rtfeldman$elm_css$Css$wait : $rtfeldman$elm_css$Css$pointer),
+									_Utils_eq(model.shortened, $author$project$Page$Shortener$Processing) ? $rtfeldman$elm_css$Css$wait : (_Utils_eq(model.shortened, $author$project$Page$Shortener$Empty) ? $rtfeldman$elm_css$Css$default : $rtfeldman$elm_css$Css$pointer)),
 									$rtfeldman$elm_css$Css$hover(
-									_Utils_eq(model.shortened, $author$project$Page$Shortener$Processing) ? _List_Nil : _List_fromArray(
+									(_Utils_eq(model.shortened, $author$project$Page$Shortener$Processing) || _Utils_eq(model.shortened, $author$project$Page$Shortener$Empty)) ? _List_Nil : _List_fromArray(
 										[
 											A5(
 											$rtfeldman$elm_css$Css$boxShadow5,
@@ -9464,11 +9466,9 @@ var $author$project$Page$Shortener$viewInput = function (model) {
 							function () {
 							var _v0 = model.shortened;
 							switch (_v0.$) {
-								case 'NotShortened':
-									return $rtfeldman$elm_css$Html$Styled$text('\uEB48');
 								case 'Processing':
 									return $rtfeldman$elm_css$Html$Styled$text('\uEA48');
-								default:
+								case 'Shortened':
 									return A2(
 										$rtfeldman$elm_css$Html$Styled$span,
 										_List_fromArray(
@@ -9484,6 +9484,8 @@ var $author$project$Page$Shortener$viewInput = function (model) {
 											[
 												$rtfeldman$elm_css$Html$Styled$text('\uEA1E')
 											]));
+								default:
+									return $rtfeldman$elm_css$Html$Styled$text('\uEB48');
 							}
 						}()
 						]))

@@ -7,7 +7,7 @@ port module Page.Shortener exposing
     , view
     )
 
-import Css exposing (alignItems, backgroundColor, block, bold, border, borderRadius, boxShadow5, calc, center, color, column, cursor, display, displayFlex, em, flexDirection, fontFamilies, fontFamily, fontSize, fontWeight, height, hex, hover, int, justifyContent, lineHeight, marginBottom, marginLeft, marginRight, maxHeight, maxWidth, minus, none, outline, padding2, pct, pointer, px, textAlign, vw, wait, width)
+import Css exposing (alignItems, backgroundColor, block, bold, border, borderRadius, boxShadow5, calc, center, color, column, cursor, default, display, displayFlex, em, flexDirection, fontFamilies, fontFamily, fontSize, fontWeight, height, hex, hover, int, justifyContent, lineHeight, marginBottom, marginLeft, marginRight, maxHeight, maxWidth, minus, none, outline, padding2, pct, pointer, px, textAlign, vw, wait, width)
 import Debug exposing (log)
 import Html.Styled exposing (Attribute, Html, b, button, div, input, main_, span, text)
 import Html.Styled.Attributes exposing (css, src, type_, value)
@@ -31,11 +31,12 @@ type ShortenedStatus
     = NotShortened
     | Processing
     | Shortened
+    | Empty
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( { url = "", shortened = NotShortened }
+    ( { url = "", shortened = Empty }
     , Cmd.none
     )
 
@@ -57,11 +58,14 @@ update msg model =
             ( { model
                 | url = newUrl
                 , shortened =
-                    if model.shortened == Shortened then
-                        NotShortened
+                    if newUrl == "" then
+                        Empty
+
+                    else if model.shortened == Processing then
+                        Processing
 
                     else
-                        model.shortened
+                        NotShortened
               }
             , Cmd.none
             )
@@ -71,11 +75,11 @@ update msg model =
                 NotShortened ->
                     ( { model | shortened = Processing }, shorten (E.string model.url) )
 
-                Processing ->
-                    ( model, Cmd.none )
-
                 Shortened ->
                     ( model, copyToClipboard (E.string model.url) )
+
+                _ ->
+                    ( model, Cmd.none )
 
         ReceiveShortenedUrl newUrl ->
             ( { model | shortened = Shortened, url = "kanu.kim/_" ++ Result.withDefault model.url newUrl }, Cmd.none )
@@ -193,10 +197,13 @@ viewInput model =
                     if model.shortened == Processing then
                         wait
 
+                    else if model.shortened == Empty then
+                        default
+
                     else
                         pointer
                 , hover <|
-                    if model.shortened == Processing then
+                    if model.shortened == Processing || model.shortened == Empty then
                         []
 
                     else
@@ -204,14 +211,14 @@ viewInput model =
                 ]
             ]
             [ case model.shortened of
-                NotShortened ->
-                    text "\u{EB48}"
-
                 Processing ->
                     text "\u{EA48}"
 
                 Shortened ->
                     span [ css [ fontSize (em 0.72) ] ] [ text "\u{EA1E}" ]
+
+                _ ->
+                    text "\u{EB48}"
             ]
         ]
     ]
