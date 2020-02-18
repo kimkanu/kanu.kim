@@ -10,9 +10,12 @@
     }
   </style>
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/a11y-light.css">
+  <script src="/js/highlight.pack.js"></script>
 </head>
 
 <body>
+  <script>hljs.initHighlightingOnLoad();</script>
   <script>
     if (location.search && location.search.startsWith('?p=')) {
       const s = location.search;
@@ -54,4 +57,5 @@
     })()
   </script>
   <script src="/js/shortener-port.js"></script>
+  <script src="/js/blog-post-port.js"></script>
 </body>

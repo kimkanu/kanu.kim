@@ -57,7 +57,7 @@ viewMain =
     [ div
         [ css [ displayFlex, justifyContent center, alignItems center, height (pct 100) ] ]
         [ img
-            [ src "https://avatars0.githubusercontent.com/u/22598138?s=460&v=4"
+            [ src "https://avatars0.githubusercontent.com/u/22598138"
             , css
                 [ width (vw 50)
                 , maxWidth (px 280)
