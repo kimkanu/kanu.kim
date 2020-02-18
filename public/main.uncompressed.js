@@ -6715,7 +6715,7 @@ var $author$project$Page$BlogPost$init = function (slug) {
 		$elm$http$Http$get(
 			{
 				dh: $elm$http$Http$expectString($elm$core$Basics$identity),
-				dO: '/posts/' + (slug + '.md')
+				dO: 'https://raw.githubusercontent.com/kimkanu/kanu.kim/gh-pages/posts/' + (slug + '.md')
 			}));
 };
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
