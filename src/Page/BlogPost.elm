@@ -46,7 +46,7 @@ init : String -> ( Model, Cmd Msg )
 init slug =
     ( Loading slug
     , Http.get
-        { url = "/posts/" ++ slug ++ ".md"
+        { url = "https://raw.githubusercontent.com/kimkanu/kanu.kim/gh-pages/posts/" ++ slug ++ ".md"
         , expect = Http.expectString FetchPost
         }
     )
