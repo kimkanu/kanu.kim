@@ -7,9 +7,8 @@ module Page.Home exposing
     )
 
 import Css exposing (alignItems, center, displayFlex, height, justifyContent, maxHeight, maxWidth, pct, px, vw, width)
-import Html.Styled exposing (..)
+import Html.Styled exposing (Html, div, img, main_)
 import Html.Styled.Attributes exposing (css, src)
-import Http
 
 
 
@@ -31,15 +30,13 @@ init =
 -- UPDATE
 
 
-type Msg
-    = GotData (Result Http.Error String)
+type alias Msg =
+    ()
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
-    case msg of
-        GotData data ->
-            ( model, Cmd.none )
+update _ model =
+    ( model, Cmd.none )
 
 
 

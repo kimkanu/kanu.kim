@@ -1,10 +1,9 @@
-module Route exposing (Route(..), fromUrl, link, toTitle, toUrl)
+module Route exposing (Route(..), fromUrl, link, toUrl)
 
 import Html.Styled exposing (Attribute, Html, a)
 import Html.Styled.Attributes exposing (href)
 import Url exposing (Url)
-import Url.Builder as Builder
-import Url.Parser exposing (Parser, s, top)
+import Url.Parser exposing ((</>), Parser, s, string, top)
 
 
 
@@ -14,6 +13,8 @@ import Url.Parser exposing (Parser, s, top)
 type Route
     = Root
     | Shortener
+    | Blog
+    | BlogPost String
     | NotFound
 
 
@@ -32,40 +33,28 @@ parser =
     Url.Parser.oneOf
         [ Url.Parser.map Root top
         , Url.Parser.map Shortener <| s "shortener"
+        , Url.Parser.map Blog <| s "blog"
+        , Url.Parser.map BlogPost <| s "blog" </> string
         ]
 
 
-
--- CONVERSIONS
-
-
-type alias RouteData =
-    { url : String
-    , title : String
-    }
-
-
-toRouteData : Route -> RouteData
-toRouteData route =
+toUrl : Route -> String
+toUrl route =
     case route of
         Root ->
-            RouteData "/" "kanu.kim"
+            "/"
 
         Shortener ->
-            RouteData "/shortener" "kanu.kim URL Shortener"
+            "/shortener"
+
+        Blog ->
+            "/blog"
+
+        BlogPost slug ->
+            "/blog/" ++ slug
 
         NotFound ->
-            RouteData "/404" "Not Found"
-
-
-toTitle : Route -> String
-toTitle =
-    .title << toRouteData
-
-
-toUrl : Route -> String
-toUrl =
-    .url << toRouteData
+            "/404"
 
 
 {-| link

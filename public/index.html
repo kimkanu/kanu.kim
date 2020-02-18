@@ -1,49 +1,57 @@
-<style>
-  html,
-  body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-  }
-</style>
-<link rel="stylesheet" href="css/style.css" />
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+  </style>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
 
-<script>
-  if (location.search && location.search.startsWith('?p=')) {
-    const s = location.search;
-    const pathname = decodeURI(
-      s.indexOf('&') >= 0 ? s.slice(3, s.indexOf('&')) : s.slice(3),
-    );
-    const search = s.indexOf('&') >= 0 ? s.slice(s.indexOf('&') + 1) : '';
-    window.history.replaceState(
-      null,
-      null,
-      `/${pathname}${search ? '?' + search : ''}${location.hash}`,
-    );
-  }
-</script>
-<script src="main.js"></script>
+<body>
+  <script>
+    if (location.search && location.search.startsWith('?p=')) {
+      const s = location.search;
+      const pathname = decodeURI(
+        s.indexOf('&') >= 0 ? s.slice(3, s.indexOf('&')) : s.slice(3),
+      );
+      const search = s.indexOf('&') >= 0 ? s.slice(s.indexOf('&') + 1) : '';
+      window.history.replaceState(
+        null,
+        null,
+        `/${pathname}${search ? '?' + search : ''}${location.hash}`,
+      );
+    }
+  </script>
+  <script src="/main.js"></script>
 
-<div id="elm"></div>
-<script>
-  const app = Elm.Main.init({
-    node: document.getElementById('elm'),
-  });
-</script>
+  <div id="elm"></div>
+  <script>
+    const app = Elm.Main.init({
+      node: document.getElementById('elm'),
+    });
+  </script>
 
-<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
-<script>
-  var firebaseConfig = {
-    apiKey: 'AIzaSyC0WS9kO6ExEuWBRV1KMzPe-ktPBJthltI',
-    authDomain: 'kanu-url-shortener.firebaseapp.com',
-    databaseURL: 'https://kanu-url-shortener.firebaseio.com',
-    projectId: 'kanu-url-shortener',
-    storageBucket: 'kanu-url-shortener.appspot.com',
-    messagingSenderId: '511679429725',
-    appId: '1:511679429725:web:12e406d0f831d6a0e521b4',
-  };
-  firebase.initializeApp(firebaseConfig);
-  var db = firebase.firestore();
-</script>
-<script src="/js/shortener-port.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-firestore.js"></script>
+  <script>
+    let db;
+    (() => {
+      firebase.initializeApp({
+        apiKey: 'AIzaSyC0WS9kO6ExEuWBRV1KMzPe-ktPBJthltI',
+        authDomain: 'kanu-url-shortener.firebaseapp.com',
+        databaseURL: 'https://kanu-url-shortener.firebaseio.com',
+        projectId: 'kanu-url-shortener',
+        storageBucket: 'kanu-url-shortener.appspot.com',
+        messagingSenderId: '511679429725',
+        appId: '1:511679429725:web:12e406d0f831d6a0e521b4',
+      });
+      db = firebase.firestore();
+    })()
+  </script>
+  <script src="/js/shortener-port.js"></script>
+</body>

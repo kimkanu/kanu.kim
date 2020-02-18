@@ -3,8 +3,8 @@ module Main exposing (main)
 import Browser
 import Browser.Dom
 import Browser.Navigation as Nav
-import Html.Styled exposing (..)
-import Html.Styled.Attributes exposing (css, src)
+import Html.Styled exposing (Html, text, toUnstyled)
+import Page.BlogPost
 import Page.Home
 import Page.Shortener
 import Platform.Sub
@@ -39,8 +39,15 @@ type alias Model =
 type Page
     = Home Page.Home.Model
     | Shortener Page.Shortener.Model
+    | BlogPost Page.BlogPost.Model
     | Loading
-    | Error String
+    | Error ErrorModel
+
+
+type alias ErrorModel =
+    { code : Int
+    , message : String
+    }
 
 
 init : flags -> Url -> Nav.Key -> ( Model, Cmd Msg )
@@ -66,6 +73,7 @@ type Msg
 type PageMsg
     = HomeMsg Page.Home.Msg
     | ShortenerMsg Page.Shortener.Msg
+    | BlogPostMsg Page.BlogPost.Msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -93,8 +101,12 @@ update msg model =
                     mapPage model Shortener ShortenerMsg <|
                         Page.Shortener.update shortenerMsg model_
 
+                ( BlogPost model_, BlogPostMsg blogPostMsg ) ->
+                    mapPage model BlogPost BlogPostMsg <|
+                        Page.BlogPost.update blogPostMsg model_
+
                 _ ->
-                    ( model, Cmd.none )
+                    ( { model | page = Error <| ErrorModel 404 "Not found." }, Cmd.none )
 
 
 mapPage : Model -> (a -> Page) -> (msg -> PageMsg) -> ( a, Cmd msg ) -> ( Model, Cmd Msg )
@@ -119,8 +131,15 @@ onNavigation model =
                 mapPage model Shortener ShortenerMsg <|
                     Page.Shortener.init
 
+            Route.BlogPost slug ->
+                mapPage model BlogPost BlogPostMsg <|
+                    Page.BlogPost.init slug
+
             Route.NotFound ->
-                ( model, Cmd.none )
+                ( { model | page = Error <| ErrorModel 404 "Not found." }, Cmd.none )
+
+            _ ->
+                ( { model | page = Error <| ErrorModel 999 "Unknown error" }, Cmd.none )
 
 
 {-| Scroll to top of page on navigation.
@@ -137,7 +156,7 @@ case ( currentPage, model.route ) of
 )
 -}
 scrollOnNav : Page -> ( Model, Cmd Msg ) -> ( Model, Cmd Msg )
-scrollOnNav currentPage ( model, cmds ) =
+scrollOnNav _ ( model, cmds ) =
     ( model
     , Cmd.batch
         [ cmds
@@ -153,16 +172,19 @@ scrollOnNav currentPage ( model, cmds ) =
 subscriptions : Model -> Sub Msg
 subscriptions model =
     let
-        shortnerSubscriptions =
+        subs =
             case model.page of
                 Shortener shortenerModel ->
-                    Page.Shortener.subscriptions shortenerModel
+                    Sub.map ShortenerMsg <| Page.Shortener.subscriptions shortenerModel
+
+                BlogPost blogPostModel ->
+                    Sub.map BlogPostMsg <| Page.BlogPost.subscriptions blogPostModel
 
                 _ ->
                     Sub.none
     in
     Platform.Sub.batch
-        [ Platform.Sub.map (ShortenerMsg >> PageMsg) shortnerSubscriptions
+        [ Platform.Sub.map PageMsg subs
         ]
 
 
@@ -200,8 +222,25 @@ viewPage model =
         Shortener model_ ->
             map (PageMsg << ShortenerMsg) (Page.Shortener.view model_)
 
+        BlogPost model_ ->
+            map (PageMsg << BlogPostMsg) (Page.BlogPost.view model_)
+
         Loading ->
-            { title = "", page = [] }
+            { title = "", page = [ text "" ] }
 
         Error err ->
-            { title = "", page = [ text err ] }
+            viewError err
+
+
+viewError : ErrorModel -> { title : String, page : List (Html Msg) }
+viewError error =
+    case error.code of
+        404 ->
+            { title = "404 Not found - kanu.kim"
+            , page = [ text "404" ]
+            }
+
+        _ ->
+            { title = "Unknown error occurred - kanu.kim"
+            , page = [ text "Unknown error occurred." ]
+            }

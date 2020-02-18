@@ -7,12 +7,10 @@ port module Page.Shortener exposing
     , view
     )
 
-import Css exposing (alignItems, backgroundColor, block, bold, border, borderRadius, boxShadow5, calc, center, color, column, cursor, default, display, displayFlex, em, flexDirection, fontFamilies, fontFamily, fontSize, fontWeight, height, hex, hover, int, justifyContent, lineHeight, marginBottom, marginLeft, marginRight, maxHeight, maxWidth, minus, none, outline, padding2, pct, pointer, px, textAlign, vw, wait, width)
-import Debug exposing (log)
-import Html.Styled exposing (Attribute, Html, b, button, div, input, main_, span, text)
-import Html.Styled.Attributes exposing (css, src, type_, value)
+import Css exposing (alignItems, backgroundColor, border, borderRadius, boxShadow5, calc, center, color, column, cursor, default, displayFlex, em, flexDirection, fontFamilies, fontSize, fontWeight, height, hex, hover, int, justifyContent, lineHeight, marginBottom, marginLeft, marginRight, maxWidth, minus, none, outline, padding2, pct, pointer, px, textAlign, vw, wait, width)
+import Html.Styled exposing (Html, div, input, main_, span, text)
+import Html.Styled.Attributes exposing (css, type_, value)
 import Html.Styled.Events exposing (onClick, onInput)
-import Http
 import Json.Decode as D
 import Json.Encode as E
 
