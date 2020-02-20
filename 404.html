@@ -9,11 +9,7 @@
   }
   var pathname = location.pathname.slice(1);
 
-  if (pathname.includes('.md')) {
-    location.replace(
-      'https://raw.githubusercontent.com/kimkanu/kanu.kim/gh-pages' + location.pathname,
-    );
-  } else if (
+  if (
     pathname.charAt(0) != '_' ||
     pathname.indexOf('/') >= 0 ||
     pathname.indexOf('?') >= 0
