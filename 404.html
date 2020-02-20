@@ -8,6 +8,12 @@
     );
   }
   var pathname = location.pathname.slice(1);
+
+  if (pathname.includes('.md')) {
+    location.replace(
+      'https://raw.githubusercontent.com/kimkanu/kanu.kim/gh-pages' + location.pathname,
+    );
+  }
   if (
     pathname.charAt(0) != '_' ||
     pathname.indexOf('/') >= 0 ||
