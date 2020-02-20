@@ -9,12 +9,9 @@
   }
   var pathname = location.pathname.slice(1);
   if (
-    (
-      pathname.charAt(0) != '_' ||
-      pathname.indexOf('/') >= 0 ||
-      pathname.indexOf('?') >= 0
-    ) &&
-    !pathname.includes('.md')
+    pathname.charAt(0) != '_' ||
+    pathname.indexOf('/') >= 0 ||
+    pathname.indexOf('?') >= 0
   ) {
     goToMain(pathname);
   }
