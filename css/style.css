@@ -63,7 +63,7 @@
 
 @font-face {
   font-family: 'BoxIcons';
-  src: url('https://cdn.jsdelivr.net/npm/boxicons@2.0.4/fonts/boxicons.woff2') format('woff2'), url('https://cdn.jsdelivr.net/npm/boxicons@2.0.4/fonts/boxicons.woff') format('woff');
+  src: url('https://cdn.jsdelivr.net/npm/boxicons@2.0.5/fonts/boxicons.woff2') format('woff2'), url('https://cdn.jsdelivr.net/npm/boxicons@2.0.5/fonts/boxicons.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }

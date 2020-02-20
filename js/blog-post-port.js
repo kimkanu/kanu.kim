@@ -1,7 +1,7 @@
 function highlight() {
   document.querySelectorAll('pre code').forEach((block) => {
+    if (!hljs || !hljs.highlightBlock) return;
     hljs.highlightBlock(block);
-    hljs.lineNumbersBlock(block);
   });
 }
 
