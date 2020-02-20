@@ -17561,7 +17561,8 @@ var $author$project$Page$BlogPost$viewYamlError = function (error) {
 															$rtfeldman$elm_css$Css$px(4)),
 															$rtfeldman$elm_css$Css$borderRadius(
 															$rtfeldman$elm_css$Css$px(4)),
-															$rtfeldman$elm_css$Css$color($author$project$Page$BlogPost$colorTheme.bh)
+															$rtfeldman$elm_css$Css$color($author$project$Page$BlogPost$colorTheme.bh),
+															$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$inlineBlock)
 														]))
 												]),
 											_List_fromArray(
