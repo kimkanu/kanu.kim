@@ -1,12 +1,27 @@
 ---
-title: Hello
-date: 2020-02-18
+title: Hello World
+date: 2020-02-21
 category: [ first post, hello ]
 ---
 
 
 Some `inline code`.
 
+$formula$
+
+$$
+    formula
+$$
+
+
+$$
+    formula
+$$
+
+
+$$
+    formula
+$$
 
 ```elm
 update : Msg -> Model -> ( Model, Cmd Msg )
