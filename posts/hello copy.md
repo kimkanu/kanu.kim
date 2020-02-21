@@ -1,7 +1,7 @@
 ---
 title: Hello World
 date: 2020-02-21
-category: [ first post, hello ]
+category: [ second post, hello ]
 ---
 
 
