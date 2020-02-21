@@ -7810,10 +7810,10 @@ var $elm$core$Result$toMaybe = function (result) {
 var $author$project$Page$BlogList$update = F2(
 	function (msg, model) {
 		var response = msg;
+		var category = $author$project$Page$BlogList$getCategory(model);
 		if (response.$ === 1) {
 			return _Utils_Tuple2(
-				$author$project$Page$BlogList$LoadingFailure(
-					$author$project$Page$BlogList$getCategory(model)),
+				$author$project$Page$BlogList$LoadingFailure(category),
 				$elm$core$Platform$Cmd$none);
 		} else {
 			var indexJson = response.a;
@@ -16444,12 +16444,29 @@ var $author$project$Page$BlogList$view = function (model) {
 							]),
 						_Utils_ap(
 							$author$project$Page$BlogList$viewHeader,
-							A2(
-								$elm$core$List$map,
-								function (s) {
-									return $rtfeldman$elm_css$Html$Styled$text(s.ai);
-								},
-								m)))
+							function () {
+								if (maybeCategory.$ === 1) {
+									return A2(
+										$elm$core$List$map,
+										function (s) {
+											return $rtfeldman$elm_css$Html$Styled$text(s.ai);
+										},
+										m);
+								} else {
+									var category = maybeCategory.a;
+									return A2(
+										$elm$core$List$map,
+										function (s) {
+											return $rtfeldman$elm_css$Html$Styled$text(s.ai);
+										},
+										A2(
+											$elm$core$List$filter,
+											function (s) {
+												return _Utils_eq(s.ai, category);
+											},
+											m));
+								}
+							}()))
 					]),
 				ai: 'Blog - kanu.kim'
 			};
