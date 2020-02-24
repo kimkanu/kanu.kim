@@ -11,3 +11,11 @@ app.ports.highlightSyntax.subscribe(() => {
   setTimeout(highlight, 200);
   setTimeout(highlight, 1000);
 });
+
+
+app.ports.highlightSyntaxList.subscribe(() => {
+  setTimeout(highlight, 0);
+  setTimeout(highlight, 90);
+  setTimeout(highlight, 200);
+  setTimeout(highlight, 1000);
+});
