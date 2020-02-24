@@ -1,11 +1,19 @@
 function highlight() {
   document.querySelectorAll('pre code').forEach((block) => {
+    if (!hljs || !hljs.highlightBlock) return;
     hljs.highlightBlock(block);
-    hljs.lineNumbersBlock(block);
   });
 }
 
 app.ports.highlightSyntax.subscribe(() => {
+  setTimeout(highlight, 0);
+  setTimeout(highlight, 90);
+  setTimeout(highlight, 200);
+  setTimeout(highlight, 1000);
+});
+
+
+app.ports.highlightSyntaxList.subscribe(() => {
   setTimeout(highlight, 0);
   setTimeout(highlight, 90);
   setTimeout(highlight, 200);

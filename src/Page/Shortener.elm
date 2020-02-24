@@ -13,6 +13,7 @@ import Html.Styled.Attributes exposing (css, type_, value)
 import Html.Styled.Events exposing (onClick, onInput)
 import Json.Decode as D
 import Json.Encode as E
+import Util.Icon exposing (copy, ellipsis, icon, rightArrow)
 
 
 
@@ -180,7 +181,7 @@ viewInput model =
                 , fontSize (em 3.5)
                 , backgroundColor
                     (hex <|
-                        if model.shortened == Processing then
+                        if model.shortened == Processing || model.shortened == Empty then
                             "828788"
 
                         else
@@ -190,7 +191,6 @@ viewInput model =
                 , color (hex "ffffff")
                 , textAlign center
                 , marginLeft (em 0.3)
-                , fontFamilies [ "BoxIcons" ]
                 , cursor <|
                     if model.shortened == Processing then
                         wait
@@ -210,13 +210,13 @@ viewInput model =
             ]
             [ case model.shortened of
                 Processing ->
-                    text "\u{EA48}"
+                    icon [] ellipsis
 
                 Shortened ->
-                    span [ css [ fontSize (em 0.72) ] ] [ text "\u{EA1E}" ]
+                    icon [ fontSize (em 0.72) ] copy
 
                 _ ->
-                    text "\u{EB48}"
+                    icon [] rightArrow
             ]
         ]
     ]

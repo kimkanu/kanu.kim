@@ -9,8 +9,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "./scripts/build.sh",
-    "publish": "./scripts/build.sh && node scripts/publish.js",
-    "dev": "elm-live src/Main.elm --open --pushstate --dir=./public -- --optimize --output=./public/main.js",
+    "publish": "./scripts/build.sh && node scripts/make-index.js && node scripts/publish.js",
+    "dev": "elm-live src/Main.elm --open --pushstate --dir=./public -- --output=./public/main.js",
     "format": "elm-format src/* --yes"
   },
   "repository": {

@@ -1,7 +1,6 @@
 app.ports.shorten.subscribe(function (u) {
   const url = u.indexOf('//') >= 0 ? u : `https://${u}`;
   shorten(url).then(shortenedUrl => {
-    console.log(shortenedUrl)
     app.ports.getShortenedUrl.send(shortenedUrl);
   });
 });

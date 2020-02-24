@@ -4,6 +4,7 @@ import Browser
 import Browser.Dom
 import Browser.Navigation as Nav
 import Html.Styled exposing (Html, text, toUnstyled)
+import Page.BlogList
 import Page.BlogPost
 import Page.Home
 import Page.Shortener
@@ -39,6 +40,7 @@ type alias Model =
 type Page
     = Home Page.Home.Model
     | Shortener Page.Shortener.Model
+    | BlogList Page.BlogList.Model
     | BlogPost Page.BlogPost.Model
     | Loading
     | Error ErrorModel
@@ -73,6 +75,7 @@ type Msg
 type PageMsg
     = HomeMsg Page.Home.Msg
     | ShortenerMsg Page.Shortener.Msg
+    | BlogListMsg Page.BlogList.Msg
     | BlogPostMsg Page.BlogPost.Msg
 
 
@@ -100,6 +103,10 @@ update msg model =
                 ( Shortener model_, ShortenerMsg shortenerMsg ) ->
                     mapPage model Shortener ShortenerMsg <|
                         Page.Shortener.update shortenerMsg model_
+
+                ( BlogList model_, BlogListMsg blogListMsg ) ->
+                    mapPage model BlogList BlogListMsg <|
+                        Page.BlogList.update blogListMsg model_
 
                 ( BlogPost model_, BlogPostMsg blogPostMsg ) ->
                     mapPage model BlogPost BlogPostMsg <|
@@ -131,6 +138,10 @@ onNavigation model =
                 mapPage model Shortener ShortenerMsg <|
                     Page.Shortener.init
 
+            Route.BlogList maybeQuery ->
+                mapPage model BlogList BlogListMsg <|
+                    Page.BlogList.init maybeQuery
+
             Route.BlogPost slug ->
                 mapPage model BlogPost BlogPostMsg <|
                     Page.BlogPost.init slug
@@ -138,8 +149,14 @@ onNavigation model =
             Route.NotFound ->
                 ( { model | page = Error <| ErrorModel 404 "Not found." }, Cmd.none )
 
-            _ ->
-                ( { model | page = Error <| ErrorModel 999 "Unknown error" }, Cmd.none )
+
+
+{-
+
+   _ ->
+       ( { model | page = Error <| ErrorModel 999 "Unknown error" }, Cmd.none )
+
+-}
 
 
 {-| Scroll to top of page on navigation.
@@ -176,9 +193,6 @@ subscriptions model =
             case model.page of
                 Shortener shortenerModel ->
                     Sub.map ShortenerMsg <| Page.Shortener.subscriptions shortenerModel
-
-                BlogPost blogPostModel ->
-                    Sub.map BlogPostMsg <| Page.BlogPost.subscriptions blogPostModel
 
                 _ ->
                     Sub.none
@@ -221,6 +235,9 @@ viewPage model =
 
         Shortener model_ ->
             map (PageMsg << ShortenerMsg) (Page.Shortener.view model_)
+
+        BlogList model_ ->
+            map (PageMsg << BlogListMsg) (Page.BlogList.view model_)
 
         BlogPost model_ ->
             map (PageMsg << BlogPostMsg) (Page.BlogPost.view model_)
