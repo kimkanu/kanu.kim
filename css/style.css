@@ -218,3 +218,7 @@
     margin-left: -64px;
   }
 }
+
+.katex {
+  font-size: 1.05em!important;
+}
