@@ -18705,7 +18705,18 @@ var $author$project$Page$Home$view = function (_v0) {
 	return {
 		u: _List_fromArray(
 			[
-				A2($rtfeldman$elm_css$Html$Styled$main_, _List_Nil, $author$project$Page$Home$viewMain)
+				A2(
+				$rtfeldman$elm_css$Html$Styled$main_,
+				_List_fromArray(
+					[
+						$rtfeldman$elm_css$Html$Styled$Attributes$css(
+						_List_fromArray(
+							[
+								$rtfeldman$elm_css$Css$height(
+								$rtfeldman$elm_css$Css$pct(100))
+							]))
+					]),
+				$author$project$Page$Home$viewMain)
 			]),
 		ai: 'kanu.kim'
 	};
