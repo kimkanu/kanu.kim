@@ -47,7 +47,7 @@ view : Model -> { title : String, page : List (Html Msg) }
 view _ =
     { title = "kanu.kim"
     , page =
-        [ main_ [] viewMain
+        [ main_ [ css [ height (pct 100) ] ] viewMain
         ]
     }
 
