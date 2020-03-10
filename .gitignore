@@ -4,6 +4,10 @@ elm-stuff
 repl-temp-*
 
 
+# JavaScript files from Elm
+public/main.js
+public/main.uncompressed.js
+
 # Logs
 logs
 *.log
