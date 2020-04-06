@@ -18681,24 +18681,33 @@ var $author$project$Page$Home$viewMain = _List_fromArray(
 		_List_fromArray(
 			[
 				A2(
-				$rtfeldman$elm_css$Html$Styled$img,
+				$rtfeldman$elm_css$Html$Styled$a,
 				_List_fromArray(
 					[
-						$rtfeldman$elm_css$Html$Styled$Attributes$src('https://avatars0.githubusercontent.com/u/22598138'),
-						$rtfeldman$elm_css$Html$Styled$Attributes$css(
+						$rtfeldman$elm_css$Html$Styled$Attributes$href('/blog')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$rtfeldman$elm_css$Html$Styled$img,
 						_List_fromArray(
 							[
-								$rtfeldman$elm_css$Css$width(
-								$rtfeldman$elm_css$Css$vw(50)),
-								$rtfeldman$elm_css$Css$maxWidth(
-								$rtfeldman$elm_css$Css$px(280)),
-								$rtfeldman$elm_css$Css$height(
-								$rtfeldman$elm_css$Css$vw(50)),
-								$rtfeldman$elm_css$Css$maxHeight(
-								$rtfeldman$elm_css$Css$px(280))
-							]))
-					]),
-				_List_Nil)
+								$rtfeldman$elm_css$Html$Styled$Attributes$src('https://avatars0.githubusercontent.com/u/22598138'),
+								$rtfeldman$elm_css$Html$Styled$Attributes$css(
+								_List_fromArray(
+									[
+										$rtfeldman$elm_css$Css$width(
+										$rtfeldman$elm_css$Css$vw(50)),
+										$rtfeldman$elm_css$Css$maxWidth(
+										$rtfeldman$elm_css$Css$px(280)),
+										$rtfeldman$elm_css$Css$height(
+										$rtfeldman$elm_css$Css$vw(50)),
+										$rtfeldman$elm_css$Css$maxHeight(
+										$rtfeldman$elm_css$Css$px(280))
+									]))
+							]),
+						_List_Nil)
+					]))
 			]))
 	]);
 var $author$project$Page$Home$view = function (_v0) {
