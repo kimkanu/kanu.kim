@@ -7,8 +7,8 @@ module Page.Home exposing
     )
 
 import Css exposing (alignItems, center, displayFlex, height, justifyContent, maxHeight, maxWidth, pct, px, vw, width)
-import Html.Styled exposing (Html, div, img, main_)
-import Html.Styled.Attributes exposing (css, src)
+import Html.Styled exposing (Html, a, div, img, main_)
+import Html.Styled.Attributes exposing (css, href, src)
 
 
 
@@ -56,15 +56,17 @@ viewMain : List (Html Msg)
 viewMain =
     [ div
         [ css [ displayFlex, justifyContent center, alignItems center, height (pct 100) ] ]
-        [ img
-            [ src "https://avatars0.githubusercontent.com/u/22598138"
-            , css
-                [ width (vw 50)
-                , maxWidth (px 280)
-                , height (vw 50)
-                , maxHeight (px 280)
+        [ a [ href "/blog" ]
+            [ img
+                [ src "https://avatars0.githubusercontent.com/u/22598138"
+                , css
+                    [ width (vw 50)
+                    , maxWidth (px 280)
+                    , height (vw 50)
+                    , maxHeight (px 280)
+                    ]
                 ]
+                []
             ]
-            []
         ]
     ]

@@ -167,7 +167,11 @@ view model =
                                             |> (++)
 
                                     dealEmpty l =
-                                        if List.length l == 0 then viewEmpty else l
+                                        if List.length l == 0 then
+                                            viewEmpty
+
+                                        else
+                                            l
                                 in
                                 case maybeCategory of
                                     Nothing ->
@@ -237,7 +241,8 @@ viewPost postData =
             [ icon [] calendar
             , text <| " " ++ maybeDateToString postData.date
             , span [ css [ padding2 (px 0) (px 4) ] ] [ text " | " ]
-            ] ++ viewCategory postData.category
+            ]
+                ++ viewCategory postData.category
         ]
             ++ (Markdown.toHtml Nothing postData.summary |> List.map Html.Styled.fromUnstyled)
 
