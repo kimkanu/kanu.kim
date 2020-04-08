@@ -6849,7 +6849,7 @@ var $author$project$Main$onNavigation = function (model) {
 		$author$project$Main$scrollOnNav,
 		model.u,
 		function () {
-			var _v0 = model.be;
+			var _v0 = model.bf;
 			switch (_v0.$) {
 				case 0:
 					return A4($author$project$Main$mapPage, model, $author$project$Main$Home, $author$project$Main$HomeMsg, $author$project$Page$Home$init);
@@ -6889,7 +6889,7 @@ var $author$project$Main$init = F3(
 			{
 				bw: key,
 				u: $author$project$Main$Loading,
-				be: $author$project$Route$fromUrl(url)
+				bf: $author$project$Route$fromUrl(url)
 			});
 	});
 var $elm$core$Platform$Sub$batch = _Platform_batch;
@@ -8315,16 +8315,16 @@ var $terezka$yaml$Yaml$Parser$Util$indented = F2(
 						A2(
 						$elm$parser$Parser$andThen,
 						function (_v0) {
-							return next.a0;
+							return next.a1;
 						},
 						$elm$parser$Parser$end),
 						A2(
 						$elm$parser$Parser$andThen,
 						function (_v1) {
-							return next.a0;
+							return next.a1;
 						},
 						$elm$parser$Parser$symbol('\n...\n')),
-						_Utils_eq(actual, indent) ? next.a1 : ((_Utils_cmp(actual, indent) > 0) ? next.a4(actual) : next.bg)
+						_Utils_eq(actual, indent) ? next.a2 : ((_Utils_cmp(actual, indent) > 0) ? next.a5(actual) : next.bh)
 					]));
 		};
 		return A2(
@@ -8728,9 +8728,9 @@ var $terezka$yaml$Yaml$Parser$listElementValue = function (indent) {
 		$terezka$yaml$Yaml$Parser$Util$indented,
 		indent,
 		{
-			a0: $elm$parser$Parser$succeed($terezka$yaml$Yaml$Parser$Ast$Null_),
 			a1: $elm$parser$Parser$succeed($terezka$yaml$Yaml$Parser$Ast$Null_),
-			a4: function (indent_) {
+			a2: $elm$parser$Parser$succeed($terezka$yaml$Yaml$Parser$Ast$Null_),
+			a5: function (indent_) {
 				return $elm$parser$Parser$oneOf(
 					_List_fromArray(
 						[
@@ -8740,7 +8740,7 @@ var $terezka$yaml$Yaml$Parser$listElementValue = function (indent) {
 							A2($terezka$yaml$Yaml$Parser$recordOrString, indent, indent_)
 						]));
 			},
-			bg: $elm$parser$Parser$succeed($terezka$yaml$Yaml$Parser$Ast$Null_)
+			bh: $elm$parser$Parser$succeed($terezka$yaml$Yaml$Parser$Ast$Null_)
 		});
 };
 var $terezka$yaml$Yaml$Parser$listStep = F2(
@@ -8755,8 +8755,8 @@ var $terezka$yaml$Yaml$Parser$listStep = F2(
 			$terezka$yaml$Yaml$Parser$Util$indented,
 			indent,
 			{
-				a0: $elm$parser$Parser$succeed(finish),
-				a1: $elm$parser$Parser$oneOf(
+				a1: $elm$parser$Parser$succeed(finish),
+				a2: $elm$parser$Parser$oneOf(
 					_List_fromArray(
 						[
 							A2(
@@ -8765,10 +8765,10 @@ var $terezka$yaml$Yaml$Parser$listStep = F2(
 							$terezka$yaml$Yaml$Parser$listElement(indent)),
 							$elm$parser$Parser$succeed(finish)
 						])),
-				a4: function (_v1) {
+				a5: function (_v1) {
 					return $elm$parser$Parser$problem('I was looking for the next element but didn\'t find one.');
 				},
-				bg: $elm$parser$Parser$succeed(finish)
+				bh: $elm$parser$Parser$succeed(finish)
 			});
 	});
 var $terezka$yaml$Yaml$Parser$record = F2(
@@ -8817,14 +8817,14 @@ var $terezka$yaml$Yaml$Parser$recordElementValue = function (indent) {
 		$terezka$yaml$Yaml$Parser$Util$indented,
 		indent,
 		{
-			a0: $elm$parser$Parser$succeed($terezka$yaml$Yaml$Parser$Ast$Null_),
-			a1: $elm$parser$Parser$oneOf(
+			a1: $elm$parser$Parser$succeed($terezka$yaml$Yaml$Parser$Ast$Null_),
+			a2: $elm$parser$Parser$oneOf(
 				_List_fromArray(
 					[
 						$terezka$yaml$Yaml$Parser$list(indent),
 						$elm$parser$Parser$succeed($terezka$yaml$Yaml$Parser$Ast$Null_)
 					])),
-			a4: function (indent_) {
+			a5: function (indent_) {
 				return $elm$parser$Parser$oneOf(
 					_List_fromArray(
 						[
@@ -8834,7 +8834,7 @@ var $terezka$yaml$Yaml$Parser$recordElementValue = function (indent) {
 							A2($terezka$yaml$Yaml$Parser$recordOrString, indent, indent_)
 						]));
 			},
-			bg: $elm$parser$Parser$succeed($terezka$yaml$Yaml$Parser$Ast$Null_)
+			bh: $elm$parser$Parser$succeed($terezka$yaml$Yaml$Parser$Ast$Null_)
 		});
 };
 var $terezka$yaml$Yaml$Parser$recordOrString = F2(
@@ -8931,15 +8931,15 @@ var $terezka$yaml$Yaml$Parser$recordStep = F2(
 			$terezka$yaml$Yaml$Parser$Util$indented,
 			indent,
 			{
-				a0: $elm$parser$Parser$succeed(finish),
-				a1: A2(
+				a1: $elm$parser$Parser$succeed(finish),
+				a2: A2(
 					$elm$parser$Parser$keeper,
 					$elm$parser$Parser$succeed(next),
 					$terezka$yaml$Yaml$Parser$recordElement(indent)),
-				a4: function (_v0) {
+				a5: function (_v0) {
 					return $elm$parser$Parser$problem('I was looking for the next property but didn\'t find one.');
 				},
-				bg: $elm$parser$Parser$succeed(finish)
+				bh: $elm$parser$Parser$succeed(finish)
 			});
 	});
 var $terezka$yaml$Yaml$Parser$value = $elm$parser$Parser$oneOf(
@@ -12147,25 +12147,25 @@ var $pablohirafuji$elm_markdown$Markdown$InlineParser$emphasisToMatch = F4(
 		var innerTokens = _v15.b;
 		var remainTokens = _v15.c;
 		var remainLength = openToken.f - closeToken.f;
-		var updt = (!remainLength) ? {a_: closeToken, aO: openToken, bb: remainTokens, bj: tokensTail} : ((remainLength > 0) ? {
-			a_: closeToken,
+		var updt = (!remainLength) ? {a$: closeToken, aO: openToken, bc: remainTokens, bk: tokensTail} : ((remainLength > 0) ? {
+			a$: closeToken,
 			aO: _Utils_update(
 				openToken,
 				{dx: openToken.dx + remainLength, f: closeToken.f}),
-			bb: A2(
+			bc: A2(
 				$elm$core$List$cons,
 				_Utils_update(
 					openToken,
 					{f: remainLength}),
 				remainTokens),
-			bj: tokensTail
+			bk: tokensTail
 		} : {
-			a_: _Utils_update(
+			a$: _Utils_update(
 				closeToken,
 				{f: openToken.f}),
 			aO: openToken,
-			bb: remainTokens,
-			bj: A2(
+			bc: remainTokens,
+			bk: A2(
 				$elm$core$List$cons,
 				_Utils_update(
 					closeToken,
@@ -12180,15 +12180,15 @@ var $pablohirafuji$elm_markdown$Markdown$InlineParser$emphasisToMatch = F4(
 			},
 			$pablohirafuji$elm_markdown$Markdown$InlineParser$EmphasisType(updt.aO.f),
 			updt.aO,
-			updt.a_,
+			updt.a$,
 			$elm$core$List$reverse(innerTokens));
 		return _Utils_Tuple2(
-			updt.bj,
+			updt.bk,
 			_Utils_update(
 				model,
 				{
 					d: A2($elm$core$List$cons, match, model.d),
-					k: updt.bb
+					k: updt.bc
 				}));
 	});
 var $pablohirafuji$elm_markdown$Markdown$InlineParser$htmlElementTTM = function (_v12) {
@@ -13215,7 +13215,7 @@ var $author$project$Page$BlogPost$update = F2(
 					$author$project$Page$BlogPost$YamlFailure(
 						{
 							bq: 'Missing yaml metadata.',
-							ba: markdownWithYaml,
+							bb: markdownWithYaml,
 							cV: $author$project$Page$BlogPost$getSlug(model)
 						}),
 					$elm$core$Platform$Cmd$none);
@@ -13230,7 +13230,7 @@ var $author$project$Page$BlogPost$update = F2(
 								bo: decodedMarkdown,
 								cd: $elm$core$Result$toMaybe(
 									$justinmimbs$date$Date$fromIsoString(yaml.cd)),
-								ba: markdownWithYaml,
+								bb: markdownWithYaml,
 								cV: $author$project$Page$BlogPost$getSlug(model),
 								ai: yaml.ai
 							}),
@@ -13249,7 +13249,7 @@ var $author$project$Page$BlogPost$update = F2(
 										return 'Decoding error: ' + e;
 									}
 								}(),
-								ba: markdownWithYaml,
+								bb: markdownWithYaml,
 								cV: $author$project$Page$BlogPost$getSlug(model)
 							}),
 						$elm$core$Platform$Cmd$none);
@@ -13320,7 +13320,7 @@ var $author$project$Main$update = F2(
 					_Utils_update(
 						model,
 						{
-							be: $author$project$Route$fromUrl(url)
+							bf: $author$project$Route$fromUrl(url)
 						}));
 			case 2:
 				if (!msg.a.$) {
@@ -15752,7 +15752,7 @@ var $rtfeldman$elm_css$Css$withPrecedingHash = function (str) {
 var $rtfeldman$elm_css$Css$erroneousHex = function (str) {
 	return {
 		aI: 1,
-		bl: 0,
+		bm: 0,
 		J: 0,
 		aM: 0,
 		dO: 0,
@@ -15981,7 +15981,7 @@ var $rtfeldman$elm_css$Css$validHex = F5(
 			var alpha = _v6.b.a;
 			return {
 				aI: alpha / 255,
-				bl: blue,
+				bm: blue,
 				J: 0,
 				aM: green,
 				dO: red,
@@ -16089,8 +16089,8 @@ var $rtfeldman$elm_css$Css$hex = function (str) {
 var $author$project$Util$Color$colorTheme = {
 	dg: $rtfeldman$elm_css$Css$hex('#d5d9dd'),
 	b0: $rtfeldman$elm_css$Css$hex('#657786'),
-	bl: $rtfeldman$elm_css$Css$hex('#1656cf'),
-	bm: $rtfeldman$elm_css$Css$hex('#424242'),
+	bm: $rtfeldman$elm_css$Css$hex('#1656cf'),
+	aZ: $rtfeldman$elm_css$Css$hex('#424242'),
 	bv: $rtfeldman$elm_css$Css$hex('#77d4c1'),
 	bz: $rtfeldman$elm_css$Css$hex('#4a7ddb'),
 	dB: $rtfeldman$elm_css$Css$hex('#929da6'),
@@ -16176,11 +16176,11 @@ var $rtfeldman$elm_css$Css$UnitlessInteger = 0;
 var $rtfeldman$elm_css$Css$int = function (val) {
 	return {
 		S: 0,
-		a3: 0,
+		a4: 0,
 		ac: 0,
 		K: 0,
 		dI: 0,
-		a7: 0,
+		a8: 0,
 		V: val,
 		aF: '',
 		aW: 0,
@@ -16296,7 +16296,7 @@ var $rtfeldman$elm_css$Css$justifyContent = function (fn) {
 		fn($rtfeldman$elm_css$Css$Internal$lengthForOverloadedProperty));
 };
 var $rtfeldman$elm_css$Css$marginLeft = $rtfeldman$elm_css$Css$prop1('margin-left');
-var $rtfeldman$elm_css$Css$none = {al: 0, b6: 0, z: 0, c: 0, n: 0, du: 0, cs: 0, bx: 0, aw: 0, ab: 0, K: 0, g: 0, e: 0, bH: 0, a9: 0, dM: 0, G: 0, bc: 0, dQ: 0, aB: 0, ah: 0, C: 0, m: 0, dZ: 0, N: 'none'};
+var $rtfeldman$elm_css$Css$none = {al: 0, b6: 0, z: 0, c: 0, n: 0, du: 0, cs: 0, bx: 0, aw: 0, ab: 0, K: 0, g: 0, e: 0, bH: 0, ba: 0, dM: 0, G: 0, bd: 0, dQ: 0, aB: 0, ah: 0, C: 0, m: 0, dZ: 0, N: 'none'};
 var $author$project$Util$Logo$smallLogoImage = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHAAAABwCAIAAABJgmMcAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QA/wD/AP+gvaeTAAAAB3RJTUUH5AISEycrqchpTAAABMNJREFUeNrtnc1u20gMx4cjR0aSyxZogRaV7XbdrZ3H2ktfOIFju03iuH6A7iWArA/2IFirtk4ysilyIvF/DJBQ8xuSM8PhIICIRkUnK/0BbZMCJZYCJZYCJZYCJZYCJZYCJZYCJZYCJZYCJZYCJVYNoHrod1EtD1Wiz8sVaBzHt7crLU09K1eg1gar1ffZbGmMUaxPyD3kMQzD9fr79fUSAJTpY6q1KGEYhvf3G2X6hOptmxCx3z+5v1c/fVS196F5XvipMt2vQzb2u9hXpnt04ElJmT6mw4+eynSvjjrLK9M/dWxxRJn+JoJqkzKtiqZ8p0xLkdVDS6bzeaeZUhaYC6arVaeZElfsS6adjX36K5CO59NG7pS6zLSpS7rOMm3w1rOb9dNmr5ERMQy7VT9t/F6+a7HP0ejQKaZMnSNlPp3Pv7abKV8rTpFPV6t1u/2UtbepC7HP3SzWeqYC3XftZirTzthipmL9oW1lKtlw20qmwh3M7WMq3xLeMqbyQE27mHoB1LSIqS9ATVuYegTUtIKpX0DNy2fqHVDzwpn2ao7UAHB8VsnUGHNx8VmcKTgPuwZQAGstuP/p49Xv99frDQBMp/+wGT1S7kBhu42TJLXWcvoLAHz7dpum6adPHxGRczqrX9Hvh46mXYFaa3/8+O/y8rLXq5UlCISIV1dXHz6M7u7uACwA36tTAMiy7Pz8/MuXf09PT11m1JVOlmXv3r19eHhYLBZBEDANyBize7j3+vWbNM1msxnvjEKWZdaC+xS6fhyASZJ0OBwGgb2+ngdBwLP+AkCe54WnjEYjAKjMKBrDkAHQ2hoOVGtRgjiOo2iQ58jmp9U52263URQh4q9MG9QuwGtYqbcPBYDtdjscDieTSZqmjQ5mr/UkSQrrWZYxW3dU7Y19wXQwGFxcTPlHVVqfTj1leshJqfCUwWA4ncowTZIkijz10wOPnhVPkWK69TP2Dz/LV6NPJJ8W2VxkRp/QUcWRYlRRJOanxbrvlZ8eW22SXXk9XPcJyney0Vex7gVTmnqo+BolmHl+E1mBWZxpkiSDwUA89ikr9iXTyeSzYOzLMiW+AtmNaiSdT8Vin/5OSXY3U1qXWqMauaQrdzOi+VQm9pu69ZStYgjm0wavkXdMJfen/LuOZu/lxfMp/16q8UYH8bMpc+xzdI6I7/k5Mw9TK04ZfVJrVJIwZR6+3ibxNYon87A2i1XOppL5tNEZ5e6+8yGfRlHUnHWBdsbKbkamhtLoXkqmP9STGkoTTMUabn2I/SbyqWQHsw9MyfOpcEu4+LpPnk/le+zF+6Vo86k8UNOufikvgJoW9Uv5AtR4sEaR9Et5BNTs65fifKVAspfyC6j5o2uB+YXS8RVx7icdjqMqKkPGmMViYS13Bae0vlwui5+5//ohHcw8oyqir1z3RWJ/56fobryGhyIiIuZ5zjawOI7fv4+yLL+5ucnzvPgATutRFKVputls3O3WeEkXhieG11OMMYg4Hv99dnZ2ctILwxAxZ3lK87/98Xj86tVfO57Pm67x1ihJUpH/84dogiDI81zKeq8XuOfxF/Z42n95t2166VKgxFKgxFKgxFKgxFKgxFKgxFKgxFKgxFKgxFKgxFKgxPoJSmBXrfevUPEAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjAtMDItMThUMTk6Mzk6NDMrMDk6MDA7Wsm3AAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIwLTAyLTE4VDE5OjM5OjQzKzA5OjAwSgdxCwAAAABJRU5ErkJggg==';
 var $rtfeldman$elm_css$Html$Styled$Attributes$src = function (url) {
 	return A2($rtfeldman$elm_css$Html$Styled$Attributes$stringProperty, 'src', url);
@@ -16398,7 +16398,7 @@ var $author$project$Page$BlogList$viewHeader = _List_fromArray(
 												$rtfeldman$elm_css$Css$fontFamilies(
 												_List_fromArray(
 													['Metropolis'])),
-												$rtfeldman$elm_css$Css$color($author$project$Util$Color$colorTheme.bm)
+												$rtfeldman$elm_css$Css$color($author$project$Util$Color$colorTheme.aZ)
 											]))
 									]),
 								_List_fromArray(
@@ -16498,7 +16498,7 @@ var $author$project$Page$BlogList$viewLoading = _List_fromArray(
 					]))
 			]))
 	]);
-var $rtfeldman$elm_css$Css$borderBox = {bk: 0, aZ: 0, N: 'border-box'};
+var $rtfeldman$elm_css$Css$borderBox = {bl: 0, a_: 0, N: 'border-box'};
 var $rtfeldman$elm_css$Css$boxSizing = $rtfeldman$elm_css$Css$prop1('box-sizing');
 var $author$project$Util$Icon$Calendar = 0;
 var $author$project$Util$Icon$calendar = 0;
@@ -16815,7 +16815,7 @@ var $justinmimbs$date$Date$formatField = F4(
 							$elm$core$String$fromInt(
 								$justinmimbs$date$Date$monthNumber(date)));
 					case 3:
-						return language.a6(
+						return language.a7(
 							$justinmimbs$date$Date$month(date));
 					case 4:
 						return language.bG(
@@ -16824,7 +16824,7 @@ var $justinmimbs$date$Date$formatField = F4(
 						return A2(
 							$elm$core$String$left,
 							1,
-							language.a6(
+							language.a7(
 								$justinmimbs$date$Date$month(date)));
 					default:
 						return '';
@@ -17167,7 +17167,7 @@ var $justinmimbs$date$Date$weekdayToName = function (wd) {
 var $justinmimbs$date$Date$language_en = {
 	bp: $justinmimbs$date$Date$withOrdinalSuffix,
 	bG: $justinmimbs$date$Date$monthToName,
-	a6: A2(
+	a7: A2(
 		$elm$core$Basics$composeR,
 		$justinmimbs$date$Date$monthToName,
 		$elm$core$String$left(3)),
@@ -17239,7 +17239,7 @@ var $author$project$Util$Color$hashString = function (mod) {
 var $author$project$Util$Color$getColorFromString = function (s) {
 	var defaultColor = $author$project$Util$Color$colorTheme.dB;
 	var colorList = _List_fromArray(
-		[$author$project$Util$Color$colorTheme.dB, $author$project$Util$Color$colorTheme.b0, $author$project$Util$Color$colorTheme.dO, $author$project$Util$Color$colorTheme.bO, $author$project$Util$Color$colorTheme.bJ, $author$project$Util$Color$colorTheme.bD, $author$project$Util$Color$colorTheme.bv, $author$project$Util$Color$colorTheme.bF, $author$project$Util$Color$colorTheme.bz, $author$project$Util$Color$colorTheme.bl, $author$project$Util$Color$colorTheme.bU, $author$project$Util$Color$colorTheme.bM, $author$project$Util$Color$colorTheme.bA]);
+		[$author$project$Util$Color$colorTheme.dB, $author$project$Util$Color$colorTheme.b0, $author$project$Util$Color$colorTheme.dO, $author$project$Util$Color$colorTheme.bO, $author$project$Util$Color$colorTheme.bJ, $author$project$Util$Color$colorTheme.bD, $author$project$Util$Color$colorTheme.bv, $author$project$Util$Color$colorTheme.bF, $author$project$Util$Color$colorTheme.bz, $author$project$Util$Color$colorTheme.bm, $author$project$Util$Color$colorTheme.bU, $author$project$Util$Color$colorTheme.bM, $author$project$Util$Color$colorTheme.bA]);
 	var mod = $elm$core$Basics$modBy(
 		$elm$core$List$length(colorList));
 	return A2(
@@ -17293,186 +17293,205 @@ var $rtfeldman$elm_css$Css$translateY = function (_v0) {
 				[value]))
 	};
 };
-var $author$project$Page$BlogList$viewCategoryItem = function (category) {
-	return _List_fromArray(
-		[
-			A2(
-			$rtfeldman$elm_css$Html$Styled$span,
-			_List_fromArray(
-				[
-					$rtfeldman$elm_css$Html$Styled$Attributes$css(
-					_List_fromArray(
-						[
-							A2(
-							$rtfeldman$elm_css$Css$margin2,
-							$rtfeldman$elm_css$Css$px(0),
-							$rtfeldman$elm_css$Css$px(4))
-						]))
-				]),
-			_List_fromArray(
-				[
-					$rtfeldman$elm_css$Html$Styled$text(' · ')
-				])),
-			A2(
-			$rtfeldman$elm_css$Html$Styled$a,
-			_List_fromArray(
-				[
-					$rtfeldman$elm_css$Html$Styled$Attributes$href(
-					'/blog?category=' + $elm$url$Url$percentEncode(category)),
-					$rtfeldman$elm_css$Html$Styled$Attributes$css(
-					_List_fromArray(
-						[
-							$rtfeldman$elm_css$Css$textDecoration($rtfeldman$elm_css$Css$none),
-							$rtfeldman$elm_css$Css$color($author$project$Util$Color$colorTheme.b0)
-						]))
-				]),
-			_List_fromArray(
-				[
-					A2(
-					$rtfeldman$elm_css$Html$Styled$span,
-					_List_fromArray(
-						[
-							$rtfeldman$elm_css$Html$Styled$Attributes$css(
-							_List_fromArray(
-								[
-									$rtfeldman$elm_css$Css$backgroundColor(
-									$author$project$Util$Color$getColorFromString(category)),
-									$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$inlineBlock),
-									$rtfeldman$elm_css$Css$width(
-									$rtfeldman$elm_css$Css$px(14)),
-									$rtfeldman$elm_css$Css$height(
-									$rtfeldman$elm_css$Css$px(14)),
-									$rtfeldman$elm_css$Css$borderRadius(
-									$rtfeldman$elm_css$Css$px(8)),
-									$rtfeldman$elm_css$Css$transform(
-									$rtfeldman$elm_css$Css$translateY(
-										$rtfeldman$elm_css$Css$px(2))),
-									$rtfeldman$elm_css$Css$marginRight(
-									$rtfeldman$elm_css$Css$px(4))
-								]))
-						]),
-					_List_Nil),
-					$rtfeldman$elm_css$Html$Styled$text(category)
-				]))
-		]);
-};
-var $author$project$Page$BlogList$viewCategory = function (a) {
-	return A2(
-		$elm$core$Maybe$withDefault,
-		_List_Nil,
-		$elm$core$List$tail(
-			A2($elm$core$List$concatMap, $author$project$Page$BlogList$viewCategoryItem, a)));
-};
-var $author$project$Page$BlogList$viewPost = function (postData) {
-	return A2(
-		$rtfeldman$elm_css$Html$Styled$div,
-		_List_fromArray(
+var $author$project$Page$BlogList$viewCategoryItem = F2(
+	function (modelCategory, category) {
+		var isHighlited = function (s) {
+			return _Utils_eq(
+				modelCategory,
+				$elm$core$Maybe$Just(s));
+		};
+		return _List_fromArray(
 			[
-				$rtfeldman$elm_css$Html$Styled$Attributes$css(
+				A2(
+				$rtfeldman$elm_css$Html$Styled$span,
 				_List_fromArray(
 					[
-						$rtfeldman$elm_css$Css$width(
-						$rtfeldman$elm_css$Css$pct(100)),
-						$rtfeldman$elm_css$Css$boxSizing($rtfeldman$elm_css$Css$borderBox),
-						A2(
-						$rtfeldman$elm_css$Css$padding2,
-						$rtfeldman$elm_css$Css$px(0),
-						$rtfeldman$elm_css$Css$px(32)),
-						$rtfeldman$elm_css$Css$fontFamilies(
-						_List_fromArray(
-							['Mosk'])),
-						$rtfeldman$elm_css$Css$marginBottom(
-						$rtfeldman$elm_css$Css$px(32))
-					]))
-			]),
-		_Utils_ap(
-			_List_fromArray(
-				[
-					A2(
-					$rtfeldman$elm_css$Html$Styled$h2,
-					_List_fromArray(
-						[
-							$rtfeldman$elm_css$Html$Styled$Attributes$css(
-							_List_fromArray(
-								[
-									$rtfeldman$elm_css$Css$marginBottom(
-									$rtfeldman$elm_css$Css$px(0)),
-									$rtfeldman$elm_css$Css$fontWeight(
-									$rtfeldman$elm_css$Css$int(900)),
-									$rtfeldman$elm_css$Css$fontFamilies(
-									_List_fromArray(
-										['Regattia'])),
-									$rtfeldman$elm_css$Css$fontSize(
-									$rtfeldman$elm_css$Css$em(1.8)),
-									$rtfeldman$elm_css$Css$lineHeight(
-									$rtfeldman$elm_css$Css$em(1))
-								]))
-						]),
-					_List_fromArray(
-						[
-							A2(
-							$rtfeldman$elm_css$Html$Styled$a,
-							_List_fromArray(
-								[
-									$rtfeldman$elm_css$Html$Styled$Attributes$href(
-									'/blog/' + $elm$url$Url$percentEncode(postData.cV)),
-									$rtfeldman$elm_css$Html$Styled$Attributes$css(
-									_List_fromArray(
-										[
-											$rtfeldman$elm_css$Css$textDecoration($rtfeldman$elm_css$Css$none),
-											$rtfeldman$elm_css$Css$color($author$project$Util$Color$colorTheme.bm)
-										]))
-								]),
-							_List_fromArray(
-								[
-									$rtfeldman$elm_css$Html$Styled$text(postData.ai)
-								]))
-						])),
-					A2(
-					$rtfeldman$elm_css$Html$Styled$span,
-					_List_fromArray(
-						[
-							$rtfeldman$elm_css$Html$Styled$Attributes$css(
-							_List_fromArray(
-								[
-									$rtfeldman$elm_css$Css$fontSize(
-									$rtfeldman$elm_css$Css$em(0.85)),
-									$rtfeldman$elm_css$Css$color($author$project$Util$Color$colorTheme.b0),
-									$rtfeldman$elm_css$Css$lineHeight(
-									$rtfeldman$elm_css$Css$em(2.5))
-								]))
-						]),
-					_Utils_ap(
+						$rtfeldman$elm_css$Html$Styled$Attributes$css(
 						_List_fromArray(
 							[
-								A2($author$project$Util$Icon$icon, _List_Nil, $author$project$Util$Icon$calendar),
-								$rtfeldman$elm_css$Html$Styled$text(
-								' ' + $author$project$Util$Date$maybeDateToString(postData.cd)),
 								A2(
-								$rtfeldman$elm_css$Html$Styled$span,
+								$rtfeldman$elm_css$Css$margin2,
+								$rtfeldman$elm_css$Css$px(0),
+								$rtfeldman$elm_css$Css$px(4))
+							]))
+					]),
+				_List_fromArray(
+					[
+						$rtfeldman$elm_css$Html$Styled$text(' · ')
+					])),
+				A2(
+				$rtfeldman$elm_css$Html$Styled$a,
+				_List_fromArray(
+					[
+						$rtfeldman$elm_css$Html$Styled$Attributes$href(
+						'/blog?category=' + $elm$url$Url$percentEncode(category)),
+						$rtfeldman$elm_css$Html$Styled$Attributes$css(
+						_Utils_ap(
+							_List_fromArray(
+								[
+									$rtfeldman$elm_css$Css$textDecoration($rtfeldman$elm_css$Css$none),
+									$rtfeldman$elm_css$Css$color($author$project$Util$Color$colorTheme.b0)
+								]),
+							isHighlited(category) ? _List_fromArray(
+								[
+									$rtfeldman$elm_css$Css$fontWeight(
+									$rtfeldman$elm_css$Css$int(800)),
+									$rtfeldman$elm_css$Css$color($author$project$Util$Color$colorTheme.aZ)
+								]) : _List_Nil))
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$rtfeldman$elm_css$Html$Styled$span,
+						_List_fromArray(
+							[
+								$rtfeldman$elm_css$Html$Styled$Attributes$css(
 								_List_fromArray(
 									[
+										$rtfeldman$elm_css$Css$backgroundColor(
+										$author$project$Util$Color$getColorFromString(category)),
+										$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$inlineBlock),
+										$rtfeldman$elm_css$Css$width(
+										$rtfeldman$elm_css$Css$px(14)),
+										$rtfeldman$elm_css$Css$height(
+										$rtfeldman$elm_css$Css$px(14)),
+										$rtfeldman$elm_css$Css$borderRadius(
+										$rtfeldman$elm_css$Css$px(8)),
+										$rtfeldman$elm_css$Css$transform(
+										$rtfeldman$elm_css$Css$translateY(
+											$rtfeldman$elm_css$Css$px(2))),
+										$rtfeldman$elm_css$Css$marginRight(
+										$rtfeldman$elm_css$Css$px(4))
+									]))
+							]),
+						_List_Nil),
+						$rtfeldman$elm_css$Html$Styled$text(category)
+					]))
+			]);
+	});
+var $author$project$Page$BlogList$viewCategory = function (maybeCategory) {
+	return function (a) {
+		return A2(
+			$elm$core$Maybe$withDefault,
+			_List_Nil,
+			$elm$core$List$tail(
+				A2(
+					$elm$core$List$concatMap,
+					$author$project$Page$BlogList$viewCategoryItem(maybeCategory),
+					a)));
+	};
+};
+var $author$project$Page$BlogList$viewPost = F2(
+	function (maybeCategory, postData) {
+		return A2(
+			$rtfeldman$elm_css$Html$Styled$div,
+			_List_fromArray(
+				[
+					$rtfeldman$elm_css$Html$Styled$Attributes$css(
+					_List_fromArray(
+						[
+							$rtfeldman$elm_css$Css$width(
+							$rtfeldman$elm_css$Css$pct(100)),
+							$rtfeldman$elm_css$Css$boxSizing($rtfeldman$elm_css$Css$borderBox),
+							A2(
+							$rtfeldman$elm_css$Css$padding2,
+							$rtfeldman$elm_css$Css$px(0),
+							$rtfeldman$elm_css$Css$px(32)),
+							$rtfeldman$elm_css$Css$fontFamilies(
+							_List_fromArray(
+								['Mosk'])),
+							$rtfeldman$elm_css$Css$marginBottom(
+							$rtfeldman$elm_css$Css$px(32))
+						]))
+				]),
+			_Utils_ap(
+				_List_fromArray(
+					[
+						A2(
+						$rtfeldman$elm_css$Html$Styled$h2,
+						_List_fromArray(
+							[
+								$rtfeldman$elm_css$Html$Styled$Attributes$css(
+								_List_fromArray(
+									[
+										$rtfeldman$elm_css$Css$marginBottom(
+										$rtfeldman$elm_css$Css$px(0)),
+										$rtfeldman$elm_css$Css$fontWeight(
+										$rtfeldman$elm_css$Css$int(900)),
+										$rtfeldman$elm_css$Css$fontFamilies(
+										_List_fromArray(
+											['Regattia'])),
+										$rtfeldman$elm_css$Css$fontSize(
+										$rtfeldman$elm_css$Css$em(1.8)),
+										$rtfeldman$elm_css$Css$lineHeight(
+										$rtfeldman$elm_css$Css$em(1))
+									]))
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$rtfeldman$elm_css$Html$Styled$a,
+								_List_fromArray(
+									[
+										$rtfeldman$elm_css$Html$Styled$Attributes$href(
+										'/blog/' + $elm$url$Url$percentEncode(postData.cV)),
 										$rtfeldman$elm_css$Html$Styled$Attributes$css(
 										_List_fromArray(
 											[
-												A2(
-												$rtfeldman$elm_css$Css$padding2,
-												$rtfeldman$elm_css$Css$px(0),
-												$rtfeldman$elm_css$Css$px(4))
+												$rtfeldman$elm_css$Css$textDecoration($rtfeldman$elm_css$Css$none),
+												$rtfeldman$elm_css$Css$color($author$project$Util$Color$colorTheme.aZ)
 											]))
 									]),
 								_List_fromArray(
 									[
-										$rtfeldman$elm_css$Html$Styled$text(' | ')
+										$rtfeldman$elm_css$Html$Styled$text(postData.ai)
+									]))
+							])),
+						A2(
+						$rtfeldman$elm_css$Html$Styled$span,
+						_List_fromArray(
+							[
+								$rtfeldman$elm_css$Html$Styled$Attributes$css(
+								_List_fromArray(
+									[
+										$rtfeldman$elm_css$Css$fontSize(
+										$rtfeldman$elm_css$Css$em(0.85)),
+										$rtfeldman$elm_css$Css$color($author$project$Util$Color$colorTheme.b0),
+										$rtfeldman$elm_css$Css$lineHeight(
+										$rtfeldman$elm_css$Css$em(2.5))
 									]))
 							]),
-						$author$project$Page$BlogList$viewCategory(postData.bn)))
-				]),
-			A2(
-				$elm$core$List$map,
-				$rtfeldman$elm_css$Html$Styled$fromUnstyled,
-				A2($pablohirafuji$elm_markdown$Markdown$toHtml, $elm$core$Maybe$Nothing, postData.c_))));
-};
+						_Utils_ap(
+							_List_fromArray(
+								[
+									A2($author$project$Util$Icon$icon, _List_Nil, $author$project$Util$Icon$calendar),
+									$rtfeldman$elm_css$Html$Styled$text(
+									' ' + $author$project$Util$Date$maybeDateToString(postData.cd)),
+									A2(
+									$rtfeldman$elm_css$Html$Styled$span,
+									_List_fromArray(
+										[
+											$rtfeldman$elm_css$Html$Styled$Attributes$css(
+											_List_fromArray(
+												[
+													A2(
+													$rtfeldman$elm_css$Css$padding2,
+													$rtfeldman$elm_css$Css$px(0),
+													$rtfeldman$elm_css$Css$px(4))
+												]))
+										]),
+									_List_fromArray(
+										[
+											$rtfeldman$elm_css$Html$Styled$text(' | ')
+										]))
+								]),
+							A2($author$project$Page$BlogList$viewCategory, maybeCategory, postData.bn)))
+					]),
+				A2(
+					$elm$core$List$map,
+					$rtfeldman$elm_css$Html$Styled$fromUnstyled,
+					A2($pablohirafuji$elm_markdown$Markdown$toHtml, $elm$core$Maybe$Nothing, postData.c_))));
+	});
 var $author$project$Page$BlogList$viewPostSeparator = A2(
 	$rtfeldman$elm_css$Html$Styled$div,
 	_List_fromArray(
@@ -17595,7 +17614,7 @@ var $author$project$Page$BlogList$view = function (model) {
 																				[
 																					$rtfeldman$elm_css$Css$fontWeight(
 																					$rtfeldman$elm_css$Css$int(700)),
-																					$rtfeldman$elm_css$Css$color($author$project$Util$Color$colorTheme.bm)
+																					$rtfeldman$elm_css$Css$color($author$project$Util$Color$colorTheme.aZ)
 																				]))
 																		]),
 																	_List_fromArray(
@@ -17608,7 +17627,9 @@ var $author$project$Page$BlogList$view = function (model) {
 												};
 												var renderPostList = A2(
 													$elm$core$Basics$composeR,
-													$elm$core$List$map($author$project$Page$BlogList$viewPost),
+													$elm$core$List$map(
+														$author$project$Page$BlogList$viewPost(
+															$author$project$Page$BlogList$getCategory(model))),
 													$elm$core$List$intersperse($author$project$Page$BlogList$viewPostSeparator));
 												var dealEmpty = function (l) {
 													return (!$elm$core$List$length(l)) ? $author$project$Page$BlogList$viewEmpty : l;
@@ -17763,7 +17784,7 @@ var $rtfeldman$elm_css$Css$prop3 = F4(
 var $rtfeldman$elm_css$Css$padding3 = $rtfeldman$elm_css$Css$prop3('padding');
 var $rtfeldman$elm_css$Css$Structure$Screen = 1;
 var $rtfeldman$elm_css$Css$Media$screen = 1;
-var $rtfeldman$elm_css$Css$noWrap = {aL: 0, a2: 0, N: 'nowrap', Y: 0};
+var $rtfeldman$elm_css$Css$noWrap = {aL: 0, a3: 0, N: 'nowrap', Y: 0};
 var $rtfeldman$elm_css$Css$whiteSpace = $rtfeldman$elm_css$Css$prop1('white-space');
 var $author$project$Page$PostCategory$viewCategoryItem = function (category) {
 	return A2(
@@ -18083,7 +18104,7 @@ var $author$project$Page$BlogPost$viewHeader = _List_fromArray(
 												$rtfeldman$elm_css$Css$fontFamilies(
 												_List_fromArray(
 													['Metropolis'])),
-												$rtfeldman$elm_css$Css$color($author$project$Util$Color$colorTheme.bm)
+												$rtfeldman$elm_css$Css$color($author$project$Util$Color$colorTheme.aZ)
 											]))
 									]),
 								_List_fromArray(

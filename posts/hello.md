@@ -7,6 +7,7 @@ category: [ first post, hello ]
 
 Some `inline code`.
 
+> hi
 
 ```elm
 update : Msg -> Model -> ( Model, Cmd Msg )
