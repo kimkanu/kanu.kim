@@ -14,6 +14,7 @@ type alias ColorTheme =
     , redOrange : Css.Color
     , orange : Css.Color
     , melon : Css.Color
+    , greenBlue : Css.Color
     , mint : Css.Color
     , lightBlue : Css.Color
     , blue : Css.Color
@@ -34,6 +35,7 @@ colorTheme =
     , redOrange = hex "#FF7372"
     , orange = hex "#FF9276"
     , melon = hex "#E4E2B9"
+    , greenBlue = hex "#77d4c1"
     , mint = hex "#6AC3C9"
     , lightBlue = hex "#4a7ddb"
     , blue = hex "#1656cf"
@@ -56,6 +58,7 @@ getColorFromString s =
             , colorTheme.redOrange
             , colorTheme.orange
             , colorTheme.melon
+            , colorTheme.greenBlue
             , colorTheme.mint
             , colorTheme.lightBlue
             , colorTheme.blue
@@ -63,13 +66,20 @@ getColorFromString s =
             , colorTheme.pink
             , colorTheme.lightPink
             ]
+
+        mod =
+            modBy <| List.length colorList
     in
     List.Extra.getAt
-        (hashString s |> modBy (List.length colorList))
+        (hashString mod s |> (\i -> 5 * i + 8 |> mod))
         colorList
         |> Maybe.withDefault defaultColor
 
 
-hashString : String -> Int
-hashString =
-    String.toList >> List.map Char.toCode >> List.foldl (+) 0
+hashString : (Int -> Int) -> String -> Int
+hashString mod =
+    let
+        hash =
+            \a -> \b -> a + b
+    in
+    String.toList >> List.map Char.toCode >> List.foldl (hash << mod) 0 >> mod
