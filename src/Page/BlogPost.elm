@@ -59,7 +59,7 @@ init slug frag =
     ( Loading slug frag
     , Http.get
         { url =
-            "/posts/"
+            "https://raw.githubusercontent.com/kimkanu/kanu.kim/gh-pages/posts/"
                 ++ slug
                 ++ ".md"
         , expect = Http.expectString FetchPost
