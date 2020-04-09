@@ -19241,7 +19241,15 @@ var $author$project$Page$Shortener$view = function (model) {
 			[
 				A2(
 				$rtfeldman$elm_css$Html$Styled$main_,
-				_List_Nil,
+				_List_fromArray(
+					[
+						$rtfeldman$elm_css$Html$Styled$Attributes$css(
+						_List_fromArray(
+							[
+								$rtfeldman$elm_css$Css$height(
+								$rtfeldman$elm_css$Css$pct(100))
+							]))
+					]),
 				$author$project$Page$Shortener$viewContent(model))
 			]),
 		aj: 'kanu.kim URL Shortener'
