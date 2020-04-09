@@ -5,8 +5,9 @@ import Browser.Dom
 import Browser.Navigation as Nav
 import Html.Styled exposing (Html, text, toUnstyled)
 import Page.BlogList
-import Page.BlogPost
+import Page.BlogPost exposing (Model(..))
 import Page.Home
+import Page.ScrollTo exposing (scrollTo)
 import Page.Shortener
 import Platform.Sub
 import Route exposing (Route)
@@ -59,6 +60,7 @@ init _ url key =
         , page = Loading
         , key = key
         }
+        Nothing
 
 
 
@@ -86,9 +88,28 @@ update msg model =
             ( model, Cmd.none )
 
         OnUrlChange url ->
-            onNavigation { model | route = Route.fromUrl url }
+            onNavigation { model | route = Route.fromUrl url } (Just model.route)
 
         OnUrlRequest (Browser.Internal url) ->
+            {-
+
+               case model.route of
+                   Route.BlogPost slug _ ->
+                       case Route.fromUrl url of
+                           Route.BlogPost slug_ fragment ->
+                               if slug == slug_ then
+                                   ( model, pushFragment <| Maybe.withDefault "" fragment )
+                               else
+                                   ( model, Nav.pushUrl model.key (Url.toString url) )
+
+                           _ ->
+                               ( model, Nav.pushUrl model.key (Url.toString url) )
+
+
+                   _ ->
+                       ( model, Nav.pushUrl model.key (Url.toString url) )
+
+            -}
             ( model, Nav.pushUrl model.key (Url.toString url) )
 
         OnUrlRequest (Browser.External href) ->
@@ -126,9 +147,22 @@ mapPage model toPage toMsg ( page, cmds ) =
 {-| Map a Route (a parsed url) to a Page and initialize the modules Model.
 This is the place you fetch data to render the page.
 -}
-onNavigation : Model -> ( Model, Cmd Msg )
-onNavigation model =
-    scrollOnNav model.page <|
+onNavigation : Model -> Maybe Route -> ( Model, Cmd Msg )
+onNavigation model prevRoute =
+    let
+        scrollOrNot =
+            case ( model.route, prevRoute ) of
+                ( Route.BlogPost slug _, Just (Route.BlogPost slug_ _) ) ->
+                    if slug == slug_ then
+                        identity
+
+                    else
+                        scrollToTop
+
+                _ ->
+                    scrollToTop
+    in
+    scrollOrNot <|
         case model.route of
             Route.Root ->
                 mapPage model Home HomeMsg <|
@@ -142,38 +176,26 @@ onNavigation model =
                 mapPage model BlogList BlogListMsg <|
                     Page.BlogList.init maybeQuery
 
-            Route.BlogPost slug ->
-                mapPage model BlogPost BlogPostMsg <|
-                    Page.BlogPost.init slug
+            Route.BlogPost slug frag ->
+                case ( prevRoute, model.page ) of
+                    ( Just (Route.BlogPost slug_ _), BlogPost m ) ->
+                        if slug == slug_ then
+                            mapPage model BlogPost BlogPostMsg ( Page.BlogPost.updateFragment frag m, scrollTo <| Maybe.withDefault "" frag )
+
+                        else
+                            mapPage model BlogPost BlogPostMsg <|
+                                Page.BlogPost.init slug frag
+
+                    _ ->
+                        mapPage model BlogPost BlogPostMsg <|
+                            Page.BlogPost.init slug frag
 
             Route.NotFound ->
                 ( { model | page = Error <| ErrorModel 404 "Not found." }, Cmd.none )
 
 
-
-{-
-
-   _ ->
-       ( { model | page = Error <| ErrorModel 999 "Unknown error" }, Cmd.none )
-
--}
-
-
-{-| Scroll to top of page on navigation.
-Do this if you navigate without the need to reset the scroll position.
-case ( currentPage, model.route ) of
-( SomePage model\_, SomePageRoute arguments ) ->
-( model, cmds )
-\_ ->
-( model
-, Cmd.batch
-[ cmds
-, Task.perform (always NoOp) (Browser.Dom.setViewport 0 0)
-]
-)
--}
-scrollOnNav : Page -> ( Model, Cmd Msg ) -> ( Model, Cmd Msg )
-scrollOnNav _ ( model, cmds ) =
+scrollToTop : ( Model, Cmd Msg ) -> ( Model, Cmd Msg )
+scrollToTop ( model, cmds ) =
     ( model
     , Cmd.batch
         [ cmds

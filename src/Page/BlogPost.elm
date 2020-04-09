@@ -4,17 +4,21 @@ port module Page.BlogPost exposing
     , init
     , subscriptions
     , update
+    , updateFragment
     , view
     )
 
 import Css exposing (alignItems, backgroundColor, bold, borderRadius, calc, center, color, column, display, displayFlex, em, flexDirection, fontFamilies, fontSize, fontWeight, height, hex, int, justifyContent, lineHeight, marginBottom, marginLeft, marginRight, maxWidth, minus, none, padding2, padding3, pct, px, textAlign, vh, width)
 import Css.Media as Media exposing (only, screen, withMedia)
 import Date exposing (Date)
-import Html.Styled exposing (Html, a, div, h1, img, main_, p, pre, span, text)
-import Html.Styled.Attributes exposing (css, href, src)
+import Html.Styled as H exposing (Html, a, div, h1, h2, h3, h4, h5, h6, img, main_, p, pre, span, text)
+import Html.Styled.Attributes as A exposing (css, href, src)
 import Http
-import Markdown
+import Markdown.Block as Block exposing (Block(..))
+import Markdown.Inline as Inline
 import Page.PostCategory exposing (viewCategory)
+import Page.ScrollTo exposing (scrollTo)
+import Regex exposing (Regex)
 import Url
 import Util.Color exposing (colorTheme)
 import Util.Date exposing (maybeDateToString)
@@ -28,10 +32,11 @@ import Yaml.Decode
 
 
 type Model
-    = Loading String
-    | LoadingFailure String
+    = Loading String (Maybe String)
+    | LoadingFailure String (Maybe String)
     | YamlFailure
         { slug : String
+        , fragment : Maybe String
         , raw : String
         , error : String
         }
@@ -40,6 +45,7 @@ type Model
 
 type alias SuccessModel =
     { slug : String
+    , fragment : Maybe String
     , title : String
     , date : Maybe Date
     , category : List String
@@ -48,12 +54,12 @@ type alias SuccessModel =
     }
 
 
-init : String -> ( Model, Cmd Msg )
-init slug =
-    ( Loading slug
+init : String -> Maybe String -> ( Model, Cmd Msg )
+init slug frag =
+    ( Loading slug frag
     , Http.get
         { url =
-            "https://raw.githubusercontent.com/kimkanu/kanu.kim/gh-pages/posts/"
+            "/posts/"
                 ++ slug
                 ++ ".md"
         , expect = Http.expectString FetchPost
@@ -75,7 +81,7 @@ update msg model =
         FetchPost response ->
             case response of
                 Err _ ->
-                    ( LoadingFailure (getSlug model), Cmd.none )
+                    ( LoadingFailure (getSlug model) (getFragment model), Cmd.none )
 
                 Ok markdownWithYaml ->
                     let
@@ -98,13 +104,15 @@ update msg model =
 
                         decodedMarkdown =
                             content.markdown
-                                |> Markdown.toHtml Nothing
-                                |> List.map Html.Styled.fromUnstyled
+                                |> Block.parse Nothing
+                                |> List.map customHtmlBlock
+                                |> List.concat
                     in
                     case decodedYaml of
                         Nothing ->
                             ( YamlFailure
                                 { slug = getSlug model
+                                , fragment = getFragment model
                                 , raw = markdownWithYaml
                                 , error = "Missing yaml metadata."
                                 }
@@ -116,18 +124,20 @@ update msg model =
                                 Ok yaml ->
                                     ( Success
                                         { slug = getSlug model
+                                        , fragment = getFragment model
                                         , title = yaml.title
                                         , date = Date.fromIsoString yaml.date |> Result.toMaybe
                                         , category = yaml.category
                                         , raw = markdownWithYaml
                                         , content = decodedMarkdown
                                         }
-                                    , highlightSyntax ()
+                                    , Cmd.batch [ highlightSyntax (), getFragment model |> Maybe.withDefault "" |> scrollTo ]
                                     )
 
                                 Err x ->
                                     ( YamlFailure
                                         { slug = getSlug model
+                                        , fragment = getFragment model
                                         , raw = markdownWithYaml
                                         , error =
                                             case x of
@@ -139,6 +149,60 @@ update msg model =
                                         }
                                     , Cmd.none
                                     )
+
+
+customHtmlBlock : Block b i -> List (Html msg)
+customHtmlBlock block =
+    case block of
+        Block.Heading _ level inlines ->
+            let
+                hElement =
+                    case level of
+                        1 ->
+                            h1
+
+                        2 ->
+                            h2
+
+                        3 ->
+                            h3
+
+                        4 ->
+                            h4
+
+                        5 ->
+                            h5
+
+                        _ ->
+                            h6
+            in
+            [ hElement
+                [ A.id
+                    (formatToCLink
+                        (Inline.extractText inlines)
+                    )
+                ]
+                (List.map (Inline.toHtml >> H.fromUnstyled) inlines)
+            ]
+
+        _ ->
+            Block.defaultHtml
+                (Just (customHtmlBlock >> List.map H.toUnstyled))
+                Nothing
+                block
+                |> List.map H.fromUnstyled
+
+
+formatToCLink : String -> String
+formatToCLink =
+    String.toLower
+        >> Regex.replace oneOrMoreSpaces (always "-")
+
+
+oneOrMoreSpaces : Regex
+oneOrMoreSpaces =
+    Regex.fromString "\\s+"
+        |> Maybe.withDefault Regex.never
 
 
 type alias MarkdownWithYaml =
@@ -175,10 +239,10 @@ separateYaml markdownWithYaml =
 getSlug : Model -> String
 getSlug model =
     case model of
-        Loading slug ->
+        Loading slug _ ->
             slug
 
-        LoadingFailure slug ->
+        LoadingFailure slug _ ->
             slug
 
         YamlFailure m ->
@@ -186,6 +250,38 @@ getSlug model =
 
         Success m ->
             m.slug
+
+
+getFragment : Model -> Maybe String
+getFragment model =
+    case model of
+        Loading _ fragment ->
+            fragment
+
+        LoadingFailure _ fragment ->
+            fragment
+
+        YamlFailure m ->
+            m.fragment
+
+        Success m ->
+            m.fragment
+
+
+updateFragment : Maybe String -> Model -> Model
+updateFragment fragment model =
+    case model of
+        Loading m _ ->
+            Loading m fragment
+
+        LoadingFailure m _ ->
+            LoadingFailure m fragment
+
+        YamlFailure m ->
+            YamlFailure { m | fragment = fragment }
+
+        Success m ->
+            Success { m | fragment = fragment }
 
 
 
@@ -222,7 +318,7 @@ view model =
                 ]
             }
 
-        Loading slug ->
+        Loading slug _ ->
             { title = "kanu.kim"
             , page =
                 [ main_ [ css [ height (pct 100), fontSize (em 1.16), color colorTheme.text ] ] <|
@@ -230,7 +326,7 @@ view model =
                 ]
             }
 
-        LoadingFailure slug ->
+        LoadingFailure slug _ ->
             { title = "Not found - kanu.kim"
             , page =
                 [ main_ [ css [ height (pct 100), fontSize (em 1.16), color colorTheme.text ] ] <|

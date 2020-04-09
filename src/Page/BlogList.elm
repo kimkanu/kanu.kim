@@ -149,7 +149,7 @@ view model =
                             [ div [ css [ width (pct 100), maxWidth (px 720), Css.marginTop (px 32), marginBottom (px 72) ] ] <|
                                 let
                                     renderPostList =
-                                        List.map viewPost
+                                        List.map (viewPost <| getCategory model)
                                             >> List.intersperse viewPostSeparator
 
                                     viewHeaderCategory =
@@ -232,8 +232,8 @@ viewHeader =
     ]
 
 
-viewPost : PostData -> Html Msg
-viewPost postData =
+viewPost : Maybe String -> PostData -> Html Msg
+viewPost maybeCategory postData =
     div [ css [ width (pct 100), Css.boxSizing Css.borderBox, padding2 (px 0) (px 32), fontFamilies [ "Mosk" ], marginBottom (px 32) ] ] <|
         [ Html.Styled.h2 [ css [ marginBottom (px 0), fontWeight (int 900), fontFamilies [ "Regattia" ], fontSize (em 1.8), lineHeight (em 1) ] ]
             [ a [ href <| "/blog/" ++ Url.percentEncode postData.slug, css [ Css.textDecoration Css.none, color colorTheme.boldText ] ] [ text postData.title ] ]
@@ -242,7 +242,7 @@ viewPost postData =
             , text <| " " ++ maybeDateToString postData.date
             , span [ css [ padding2 (px 0) (px 4) ] ] [ text " | " ]
             ]
-                ++ viewCategory postData.category
+                ++ viewCategory maybeCategory postData.category
         ]
             ++ (Markdown.toHtml Nothing postData.summary |> List.map Html.Styled.fromUnstyled)
 
@@ -259,20 +259,35 @@ viewPostSeparator =
         []
 
 
-viewCategory : List String -> List (Html Msg)
-viewCategory =
+viewCategory : Maybe String -> List String -> List (Html Msg)
+viewCategory maybeCategory =
     \a ->
         Maybe.withDefault [] <|
             List.tail <|
-                List.concatMap viewCategoryItem a
+                List.concatMap (viewCategoryItem maybeCategory) a
 
 
-viewCategoryItem : String -> List (Html Msg)
-viewCategoryItem category =
+viewCategoryItem : Maybe String -> String -> List (Html Msg)
+viewCategoryItem modelCategory category =
+    let
+        isHighlited =
+            \s -> modelCategory == Just s
+    in
     [ span [ css [ Css.margin2 (px 0) (px 4) ] ] [ text " · " ]
     , a
         [ href <| "/blog?category=" ++ Url.percentEncode category
-        , css [ Css.textDecoration Css.none, color colorTheme.ambientText ]
+        , css <|
+            [ Css.textDecoration Css.none
+            , color colorTheme.ambientText
+            ]
+                ++ (if isHighlited category then
+                        [ Css.fontWeight <| Css.int 800
+                        , Css.color colorTheme.boldText
+                        ]
+
+                    else
+                        []
+                   )
         ]
         [ span [ css [ backgroundColor (getColorFromString category), display Css.inlineBlock, width (px 14), height (px 14), borderRadius (px 8), Css.transform <| Css.translateY (px 2), marginRight (px 4) ] ] []
         , text category
