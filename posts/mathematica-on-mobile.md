@@ -6,7 +6,7 @@ category: [ mathematica, userland ]
 
 If you have an Android mobile running on the armhf architecture, lucky! You can use the Wolfram Mathematica build for the Raspberry pi. Most of recent devices, unfortunately, are running on arm64 (aarch64). However, we can use `dpkg`'s multi-arch support!
 
-Install UserLAnd from the Play Store, and install your favourite (Debian-based) Linux distribution to proceed. FYI, my machine is running on Debian Buster, with UserLAnd!
+Install [UserLAnd](https://play.google.com/store/apps/details?id=tech.ula&hl=en) from the Play Store, and install your favourite (Debian-based) Linux distribution to proceed. FYI, my machine is running on Debian Buster!
 
 First, run the following command to add the support for the `armhf` architecture.
 
@@ -14,7 +14,7 @@ First, run the following command to add the support for the `armhf` architecture
 sudo dpkg --add-architecture armhf
 ```
 
-Download `wolfram-engine_12.0.1*_armhf.deb` from [the offician repo](http://archive.raspberrypi.org/debian/pool/main/w/wolfram-engine/).
+Download `wolfram-engine_12.0.1*_armhf.deb` from [the official repo](http://archive.raspberrypi.org/debian/pool/main/w/wolfram-engine/).
 
 Run
 
