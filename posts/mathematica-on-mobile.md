@@ -24,7 +24,7 @@ sudo dpkg -i wolfram-engine_12.0.1*_armhf.deb
 
 to check the dependencies. The message something as follows will be shown:
 
-```text
+```sh
 The following packages have unmet dependencies:
 wolfram-engine:armhf :
 Depends: libportaudio2:armhf but it is not going to be installed
